@@ -1,34 +1,19 @@
-# 🌐 Portfolio – Ishita Sahu
+# Ishita Sahu — engineering portfolio
 
-A modern, interactive portfolio showcasing my work, projects, internships, technical skills, and achievements in AI, Embedded Systems, FPGA, Autonomous Driving, and Full-Stack Development.
+A single-page HTML/CSS/JavaScript portfolio covering Embedded AI, FPGA, ADAS, computer vision and software projects. The source includes responsive layouts and buttons that filter the project and experience tracks.
 
-## 🚀 Live Website
+[Portfolio](https://portfolioishita-nine.vercel.app/) · [GitHub](https://github.com/Ishita-2210) · [LinkedIn](https://www.linkedin.com/in/ishita-sahu-8b3165326/)
 
-🔗 https://portfolioishita-nine.vercel.app/
+## Local preview
 
-## ✨ Highlights
+No package installation or build step is required. From the repository root:
 
-- Responsive modern UI
-- Smooth animations and interactions
-- Project showcase
-- Internship & research experience
-- Technical skills and achievements
-- Contact information and resume
+```sh
+python -m http.server 8000 --bind 127.0.0.1
+```
 
-## 🛠️ Built With
+Open http://127.0.0.1:8000/. The page uses Tailwind's browser CDN, Google Fonts and Lucide icons. Internet access is required for these resources and the GitHub profile avatar. Inline JavaScript handles filtering and icon initialization; there is no backend, account system or contact-form service.
 
-- HTML5
-- CSS3
-- JavaScript
-- GSAP
-- Vercel
+The profile image uses the account's existing GitHub avatar because the previously referenced local screenshot was not included in the repository. The page preserves its existing experience statements and dates; these are profile-provided information, not independently certified employment records.
 
-## 📬 Connect With Me
-
-- LinkedIn: https://www.linkedin.com/in/ishita-sahu-8b3165326/
-- GitHub: https://github.com/Ishita-2210
-- Email: ishitasahu2210@gmail.com
-
----
-
-⭐ If you found my portfolio interesting, feel free to star this repository!
+For a local check, inspect the page at desktop and mobile widths and exercise each track button. This repository contains no automated browser test suite. CDN availability and the external deployment are separate from the local static page.
