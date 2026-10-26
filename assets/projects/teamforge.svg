@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="600" viewBox="0 0 900 600" role="img" aria-labelledby="title desc">
+  <title id="title">TeamForge — an illustrated network of affinities</title>
+  <desc id="desc">An abstract study of luminous skill nodes and intersecting paths. The composition illustrates connections, not measured recommendation data.</desc>
+  <defs>
+    <radialGradient id="ambient" cx="64%" cy="48%" r="67%">
+      <stop offset="0" stop-color="#B9A4FF" stop-opacity=".12"/>
+      <stop offset=".48" stop-color="#D5FF68" stop-opacity=".035"/>
+      <stop offset="1" stop-color="#080B0C" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="signal" x1="110" y1="460" x2="800" y2="150" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D5FF68" stop-opacity=".16"/>
+      <stop offset=".45" stop-color="#D5FF68"/>
+      <stop offset="1" stop-color="#F2F1E8" stop-opacity=".58"/>
+    </linearGradient>
+    <linearGradient id="counter-signal" x1="130" y1="140" x2="730" y2="440" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B9A4FF" stop-opacity=".15"/>
+      <stop offset=".54" stop-color="#B9A4FF" stop-opacity=".9"/>
+      <stop offset="1" stop-color="#B9A4FF" stop-opacity=".2"/>
+    </linearGradient>
+    <filter id="haze" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
+    <g id="paths" fill="none" stroke-linecap="round">
+      <path d="M100 464C209 464 181 284 300 284S407 308 532 308S660 154 803 154"/>
+      <path d="M153 392C235 392 212 284 300 284M300 284C360 284 387 164 454 164S485 308 532 308M532 308C614 308 656 414 746 414"/>
+      <path d="M224 493C328 493 324 406 413 406S462 308 532 308"/>
+    </g>
+    <g id="cross-paths" fill="none" stroke-linecap="round">
+      <path d="M134 139C235 139 236 214 350 214S452 308 532 308S610 455 710 455"/>
+      <path d="M350 214C405 214 410 116 498 116S620 191 682 191M532 308C615 308 644 282 766 282"/>
+    </g>
+  </defs>
+  <rect width="900" height="600" fill="#080B0C"/>
+  <rect width="900" height="600" fill="url(#ambient)"/>
+  <g fill="none" stroke="#F2F1E8" stroke-opacity=".055">
+    <path d="M60 100H840M60 200H840M60 300H840M60 400H840M60 500H840"/>
+    <path d="M150 70V530M300 70V530M450 70V530M600 70V530M750 70V530"/>
+    <circle cx="532" cy="308" r="112"/>
+    <circle cx="532" cy="308" r="210" stroke-dasharray="2 12"/>
+  </g>
+  <use href="#paths" stroke="#D5FF68" stroke-width="5" opacity=".24" filter="url(#haze)"/>
+  <use href="#cross-paths" stroke="#B9A4FF" stroke-width="5" opacity=".24" filter="url(#haze)"/>
+  <use href="#paths" stroke="url(#signal)" stroke-width="1.6"/>
+  <use href="#cross-paths" stroke="url(#counter-signal)" stroke-width="1.2"/>
+  <g fill="#080B0C" stroke="#D5FF68">
+    <circle cx="100" cy="464" r="5" stroke-opacity=".4"/>
+    <circle cx="153" cy="392" r="8" stroke-opacity=".5"/>
+    <circle cx="300" cy="284" r="15" stroke-width="1.5"/>
+    <circle cx="454" cy="164" r="8" stroke-opacity=".7"/>
+    <circle cx="224" cy="493" r="5" stroke-opacity=".4"/>
+    <circle cx="413" cy="406" r="10" stroke-opacity=".75"/>
+    <circle cx="746" cy="414" r="8" stroke-opacity=".6"/>
+    <circle cx="803" cy="154" r="12" stroke-opacity=".8"/>
+  </g>
+  <g fill="#080B0C" stroke="#B9A4FF">
+    <circle cx="134" cy="139" r="6" stroke-opacity=".45"/>
+    <circle cx="350" cy="214" r="11"/>
+    <circle cx="498" cy="116" r="5" stroke-opacity=".5"/>
+    <circle cx="682" cy="191" r="8" stroke-opacity=".65"/>
+    <circle cx="766" cy="282" r="6" stroke-opacity=".65"/>
+    <circle cx="710" cy="455" r="9" stroke-opacity=".6"/>
+  </g>
+  <circle cx="532" cy="308" r="48" fill="#D5FF68" opacity=".065"/>
+  <circle cx="532" cy="308" r="32" fill="#080B0C" stroke="#D5FF68" stroke-width="1.6"/>
+  <circle cx="532" cy="308" r="23" fill="none" stroke="#F2F1E8" stroke-opacity=".12"/>
+  <path d="M521 308H543M532 297V319" stroke="#D5FF68" stroke-width="1.6" stroke-linecap="round"/>
+  <g fill="#F2F1E8">
+    <circle cx="300" cy="284" r="3"/>
+    <circle cx="350" cy="214" r="2.5"/>
+    <circle cx="413" cy="406" r="2.5"/>
+    <circle cx="803" cy="154" r="3"/>
+  </g>
+  <path d="M42 80V42H80M820 558H858V520" fill="none" stroke="#F2F1E8" stroke-opacity=".25"/>
+</svg>

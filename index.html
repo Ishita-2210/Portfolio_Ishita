@@ -1,731 +1,773 @@
-<!DOCTYPE html>
-<html lang="en" class="dark">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Ishita Sahu — Electronics and Communication Engineering, Embedded AI, FPGA, ADAS and computer vision projects.">
-    <title>Ishita Sahu — ECE Undergraduate | Embedded AI & Software</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter & JetBrains Mono -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        swiss: {
-                            bg: '#0D1110',
-                            surface: '#151B18',
-                            surfaceAlt: '#1D2721',
-                            burgundy: '#C1909A',
-                            burgundyDark: '#704350',
-                            sage: '#B4C4AA',
-                            border: '#323C35',
-                            borderLight: '#64715F'
-                        },
-                        neutral: { 500: '#98A299' }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace'],
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        /* Swiss International Dark Mode Textures */
-        .swiss-grid-pattern {
-            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 24px 24px;
-        }
-        .swiss-dots {
-            background-image: radial-gradient(rgba(180, 196, 170, 0.15) 1px, transparent 1px);
-            background-size: 16px 16px;
-        }
-        .swiss-diagonal {
-            background-image: repeating-linear-gradient(45deg, rgba(193, 144, 154, 0.06) 0, rgba(193, 144, 154, 0.06) 1px, transparent 0, transparent 10px);
-        }
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #0D1110; }
-        ::-webkit-scrollbar-thumb { background: #323C35; }
-        ::-webkit-scrollbar-thumb:hover { background: #C1909A; }
-        
-        .track-btn.active {
-            background-color: #C1909A;
-            color: #0D1110;
-            border-color: #C1909A;
-        }
-        .track-btn.active-sage {
-            background-color: #B4C4AA;
-            color: #0D1110;
-            border-color: #B4C4AA;
-        }
-        a:focus-visible, button:focus-visible {
-            outline: 3px solid #B4C4AA;
-            outline-offset: 4px;
-        }
-        .skip-link {
-            position: fixed;
-            top: -5rem;
-            left: 1rem;
-            z-index: 100;
-            padding: 0.75rem 1rem;
-            background: #B4C4AA;
-            color: #0D1110;
-        }
-        .skip-link:focus { top: 1rem; }
-        .track-item { min-width: 0; }
-        .track-item[hidden] { display: none !important; }
-        h1, h2, h3, .track-item p, .track-item .text-xs { overflow-wrap: anywhere; }
-        #projects, #main-content { scroll-margin-top: 9rem; }
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after { animation: none !important; transition: none !important; }
-        }
-    </style>
-</head>
-<body class="bg-swiss-bg text-neutral-100 font-sans antialiased selection:bg-swiss-burgundy selection:text-swiss-bg swiss-grid-pattern min-h-screen">
-
-    <a href="#main-content" class="skip-link">Skip to main content</a>
-
-    <!-- TOP SYSTEM NAVIGATION -->
-    <header class="sticky top-0 z-50 bg-swiss-bg/90 backdrop-blur-md border-b-2 border-swiss-border">
-        <div class="max-w-7xl mx-auto px-4 md:px-8 py-4 min-h-[5rem] flex flex-col md:flex-row items-center justify-between gap-4">
-            <div class="flex items-center gap-4 w-full md:w-auto justify-between shrink-0">
-                <span class="font-black tracking-tighter text-xl uppercase flex items-center gap-2 whitespace-nowrap">
-                    <span class="w-3 h-3 bg-swiss-burgundy inline-block"></span>
-                    ISHITA SAHU
-                </span>
-                <span class="text-xs font-mono text-neutral-400 border border-swiss-border px-2 py-0.5 uppercase hidden sm:inline-block whitespace-nowrap">
-                    ECE / IIIT KOTTAYAM
-                </span>
-            </div>
-
-            <!-- INTERACTIVE ROLE SWITCHER -->
-            <div role="group" aria-label="Filter experience and projects" class="flex items-center gap-2 w-full md:w-auto min-w-0 overflow-x-auto pb-2 md:pb-0 text-xs font-mono tracking-wider">
-                <span class="text-neutral-500 uppercase mr-1 hidden lg:inline">Select Track:</span>
-                <button type="button" aria-pressed="true" aria-controls="experience-list projects-grid" onclick="filterTrack('all', this)" class="track-btn active border border-swiss-border px-3 py-1.5 uppercase transition-all duration-150 hover:border-neutral-400 whitespace-nowrap">
-                    [00] All Systems
-                </button>
-                <button type="button" aria-pressed="false" aria-controls="experience-list projects-grid" onclick="filterTrack('ai', this)" class="track-btn border border-swiss-border px-3 py-1.5 uppercase transition-all duration-150 hover:border-swiss-sage whitespace-nowrap text-neutral-300">
-                    [01] AI & GenAI Role
-                </button>
-                <button type="button" aria-pressed="false" aria-controls="experience-list projects-grid" onclick="filterTrack('embedded', this)" class="track-btn border border-swiss-border px-3 py-1.5 uppercase transition-all duration-150 hover:border-swiss-burgundy whitespace-nowrap text-neutral-300">
-                    [02] Embedded Role
-                </button>
-            </div>
-
-            <!-- EXTERNAL ARCHIVES ONLY -->
-            <div class="hidden xl:flex items-center gap-6 text-xs font-mono tracking-widest uppercase font-bold">
-                <a href="https://github.com/Ishita-2210" target="_blank" rel="noopener noreferrer" class="hover:text-swiss-sage transition-colors flex items-center gap-1.5">
-                    <i aria-hidden="true" data-lucide="github" class="w-4 h-4"></i> GitHub Profile
-                </a>
-                <a href="https://www.linkedin.com/in/ishita-sahu-8b3165326/" target="_blank" rel="noopener noreferrer" class="hover:text-swiss-sage transition-colors flex items-center gap-1.5">
-                    <i aria-hidden="true" data-lucide="linkedin" class="w-4 h-4"></i> LinkedIn
-                </a>
-            </div>
-        </div>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#080b0c" />
+    <meta
+      name="description"
+      content="Ishita Sahu — ECE undergraduate at IIIT Kottayam. Exploring the space between intelligent software, embedded systems and hardware-aware machine learning."
+    />
+    <meta
+      property="og:title"
+      content="Ishita Sahu — Code, circuits & curiosity."
+    />
+    <meta
+      property="og:description"
+      content="A personal collection of experiments in AI, perception and embedded systems."
+    />
+    <meta property="og:type" content="website" />
+    <title>Ishita Sahu — Code, circuits & curiosity.</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body id="top">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="wordmark" href="#top" aria-label="Ishita Sahu, back to top"
+        ><span class="brand-star" aria-hidden="true">✳</span> ishita<span
+          class="wordmark-dot"
+          >.</span
+        ></a
+      >
+      <nav aria-label="Main navigation">
+        <a href="#work">Work</a><a href="#about">About</a
+        ><a href="#contact">Say hello <span aria-hidden="true">↗</span></a>
+      </nav>
     </header>
 
-    <main id="main-content" tabindex="-1">
-    <!-- HERO COMPOSITION (01) -->
-    <section class="border-b-4 border-swiss-border">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 min-h-[70vh]">
-            
-            <!-- Left Text Column (8 cols) -->
-            <div class="lg:col-span-8 p-6 md:p-12 lg:p-16 flex flex-col justify-between border-b-2 lg:border-b-0 lg:border-r-2 border-swiss-border relative">
-                <div class="swiss-diagonal absolute top-0 right-0 w-32 h-32 opacity-20 pointer-events-none"></div>
-                
-                <div>
-                    <div class="flex items-center gap-3 text-swiss-burgundy font-mono text-sm tracking-widest uppercase mb-6">
-                        <span>01. Architecture & Identity</span>
-                        <span class="h-px bg-swiss-burgundy flex-grow"></span>
-                    </div>
-                    <!-- Slightly Reduced Font Size & Added mr-5 Spacing on SYSTEMS -->
-                    <h1 class="text-4xl sm:text-6xl md:text-7xl font-black tracking-tighter uppercase leading-[0.9] mb-8">
-                        INTELLIGENT <br/>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-neutral-100 via-neutral-300 to-neutral-400 inline-block mr-5">SYSTEMS</span> & <br/>
-                        <span class="text-swiss-burgundy">HARDWARE.</span>
-                    </h1>
-                    <p class="text-base md:text-lg text-neutral-400 max-w-2xl font-normal leading-relaxed mb-8">
-                        B.Tech Electronics & Communication Engineering student at <strong class="text-white">IIIT Kottayam</strong>, working across embedded ADAS software, FPGA-based machine learning and agentic AI applications. Interested in how models, interfaces and hardware work together in real systems.
-                    </p>
-                </div>
-
-                <!-- Action Buttons, GitHub/LinkedIn Links & PDF Resumes -->
-                <div class="space-y-4 pt-8 border-t border-swiss-border">
-                    <div class="flex flex-wrap items-center gap-3">
-                        <a href="#projects" class="bg-swiss-burgundy text-swiss-bg font-mono uppercase text-xs tracking-widest px-5 py-3.5 border-2 border-swiss-burgundy hover:bg-black hover:text-swiss-burgundy transition-all duration-150 flex items-center gap-2">
-                            <span>Explore Repositories</span>
-                            <i aria-hidden="true" data-lucide="arrow-down-right" class="w-4 h-4"></i>
-                        </a>
-                        <a href="mailto:ishitasahu2210@gmail.com" class="bg-swiss-surface text-neutral-200 font-mono uppercase text-xs tracking-widest px-5 py-3.5 border-2 border-swiss-border hover:border-swiss-sage hover:text-swiss-sage transition-all duration-150 flex items-center gap-2">
-                            <span>ishitasahu2210@gmail.com</span>
-                            <i aria-hidden="true" data-lucide="mail" class="w-4 h-4"></i>
-                        </a>
-                    
-                    </div>
-                    <!-- Google Drive Resume Direct Links (STAYS ON HERO) -->
-                    <div class="flex flex-wrap items-center gap-3 pt-2 font-mono text-xs">
-                        <span class="text-neutral-500 uppercase tracking-widest text-[11px] mr-1">Download Resumes:</span>
-                        <a href="https://drive.google.com/file/d/1FmuMeBQ4PY2YFJ3zu1YSvQ8QL5WybObX/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="bg-swiss-surfaceAlt hover:bg-swiss-sage hover:text-swiss-bg text-neutral-300 border border-swiss-border px-4 py-2 transition-all flex items-center gap-1.5 uppercase">
-                            <i aria-hidden="true" data-lucide="external-link" class="w-3.5 h-3.5"></i> [PDF] AI / Gen-AI Role
-                        </a>
-                        <a href="https://drive.google.com/file/d/1gtRAJ9EjA0Icxhvf6fQJA3jdxVK5lNvS/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="bg-swiss-surfaceAlt hover:bg-swiss-burgundy hover:text-swiss-bg text-neutral-300 border border-swiss-border px-4 py-2 transition-all flex items-center gap-1.5 uppercase">
-                            <i aria-hidden="true" data-lucide="external-link" class="w-3.5 h-3.5"></i> [PDF] Embedded Role
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Right Image & Tightened Spec Column (4 cols) -->
-            <div class="lg:col-span-4 bg-swiss-surface flex flex-col justify-between p-6 md:p-10 relative overflow-hidden">
-                <div class="swiss-dots absolute inset-0 opacity-40 pointer-events-none"></div>
-                
-                <!-- Profile Picture Frame -->
-                <div class="relative z-10 my-auto py-4">
-                    <div class="aspect-square w-full max-w-[260px] mx-auto bg-swiss-bg border-2 border-swiss-border relative group">
-                        <!-- Burgundy architectural offset border -->
-                        <div class="absolute -bottom-3 -right-3 w-full h-full border-2 border-swiss-burgundy -z-10 group-hover:translate-x-1 group-hover:translate-y-1 transition-transform duration-150"></div>
-                        <!-- Profile Image -->
-                        <img src="https://avatars.githubusercontent.com/u/214284809?v=4" width="260" height="260" alt="Ishita Sahu" class="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 transition-all duration-300">
-                        <!-- Floating Badge -->
-                        <div class="absolute top-2 left-2 bg-swiss-bg/90 border border-swiss-border px-2 py-1 text-[10px] font-mono tracking-widest text-swiss-sage uppercase">
-                            LOC: BENGALURU, IN
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tightened Quick Specs Ledger -->
-                <div class="z-10 space-y-2.5 font-mono text-xs border-t border-swiss-border pt-5 mt-auto">
-                    <div class="flex justify-between items-center py-1 border-b border-swiss-border/50">
-                        <span class="text-neutral-500 uppercase">NAME:</span>
-                        <span class="text-white font-bold tracking-wider">ISHITA SAHU</span>
-                    </div>
-                    <div class="flex justify-between items-start py-1 border-b border-swiss-border/50 gap-2">
-                        <span class="text-neutral-500 uppercase shrink-0">DEGREE:</span>
-                        <span class="text-neutral-300 text-right uppercase leading-tight">
-                            B.TECH ECE (2024-2028)<br/>
-                            <span class="text-[10px] text-neutral-400">AT IIIT KOTTAYAM</span>
-                        </span>
-                    </div>
-                    <div class="flex justify-between items-center py-1 border-b border-swiss-border/50">
-                        <span class="text-neutral-500 uppercase">PRIMARY DOMAIN:</span>
-                        <span class="text-swiss-sage font-bold">EMBEDDED & GEN-AI</span>
-                    </div>
-                    <div class="flex justify-between items-center py-1">
-                        <span class="text-neutral-500 uppercase">STATUS:</span>
-                        <span class="text-neutral-300">ECE UNDERGRADUATE</span>
-                    </div>
-                </div>
-            </div>
+    <main id="main">
+      <section class="hero wrap" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">
+            <span class="little-star" aria-hidden="true">✳</span> Ishita Sahu ·
+            ECE undergraduate
+          </p>
+          <h1 id="hero-title">
+            Code,<br />circuits &<br /><em>curiosity.</em>
+          </h1>
+          <p class="hero-intro">
+            I build where intelligent software meets the physical world.
+            Currently exploring embedded ADAS and FPGA-based machine learning at
+            IIIT Kottayam and beyond.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-lime" href="#work"
+              >Explore my work <span aria-hidden="true">↘</span></a
+            ><a
+              class="text-link"
+              href="https://github.com/Ishita-2210"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Find me on GitHub <span aria-hidden="true">↗</span></a
+            >
+          </div>
         </div>
-    </section>
-
-    <!-- PROFESSIONAL EXPERIENCE (02) -->
-    <section class="border-b-4 border-swiss-border bg-swiss-bg">
-        <div class="max-w-7xl mx-auto px-4 md:px-8 py-16">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 pb-6 border-b-2 border-swiss-border">
-                <div>
-                    <div class="text-swiss-burgundy font-mono text-sm tracking-widest uppercase mb-2">02. Industry & Research Experience</div>
-                    <h2 class="text-4xl md:text-6xl font-black tracking-tight uppercase">PROFESSIONAL EXPERIENCE</h2>
-                </div>
-                <div class="text-xs font-mono text-neutral-400 mt-4 md:mt-0 uppercase">
-                    FILTERED VIEW: <span id="current-track-label" role="status" aria-live="polite" class="text-swiss-sage font-bold">ALL SYSTEMS</span>
-                </div>
+        <figure class="signal-study">
+          <div class="signal-stage">
+            <div class="signal-halo" aria-hidden="true"></div>
+            <svg
+              class="signal-fallback"
+              viewBox="0 0 640 640"
+              role="img"
+              aria-label="Original abstract signal sculpture: luminous lime and lavender loops intertwine"
+            >
+              <defs>
+                <linearGradient id="signal-ink">
+                  <stop stop-color="#d5ff68" />
+                  <stop offset=".65" stop-color="#b9a4ff" />
+                  <stop offset="1" stop-color="#d5ff68" />
+                </linearGradient>
+              </defs>
+              <g
+                fill="none"
+                stroke="url(#signal-ink)"
+                stroke-width="1.5"
+                opacity=".85"
+                transform="translate(320 320) rotate(-28)"
+              >
+                <ellipse rx="222" ry="96" />
+                <ellipse rx="215" ry="110" />
+                <ellipse rx="206" ry="126" />
+                <ellipse rx="194" ry="144" />
+                <ellipse rx="178" ry="163" />
+                <ellipse rx="157" ry="184" />
+                <ellipse rx="132" ry="201" />
+                <ellipse rx="104" ry="218" />
+                <ellipse rx="78" ry="229" />
+                <ellipse rx="222" ry="96" transform="rotate(75)" />
+                <ellipse rx="206" ry="126" transform="rotate(75)" />
+                <ellipse rx="178" ry="163" transform="rotate(75)" />
+                <ellipse rx="132" ry="201" transform="rotate(75)" />
+              </g>
+              <circle cx="512" cy="187" r="4" fill="#d5ff68" />
+            </svg>
+            <canvas
+              id="signal-canvas"
+              aria-label="Original interactive signal sculpture"
+              role="img"
+              aria-hidden="true"
+            ></canvas>
+            <span class="orbit-note orbit-note-top" aria-hidden="true"
+              >thought → form</span
+            ><span class="orbit-note orbit-note-bottom" aria-hidden="true"
+              >a work in motion</span
+            >
+            <span class="art-coordinate" aria-hidden="true"
+              >01 / SIGNAL STUDY</span
+            >
+          </div>
+          <figcaption>
+            <span>Ideas rarely travel in straight lines.</span>
+            <div class="art-controls">
+              <button id="change-form" type="button" hidden>
+                Change form <span aria-hidden="true">↻</span></button
+              ><button id="motion-toggle" type="button" hidden>
+                Pause motion
+              </button>
             </div>
-
-            <div class="grid grid-cols-1 gap-8" id="experience-list">
-                
-                <!-- EXP 1: Embedded ADAS / Transportation Business Unit -->
-                <div class="track-item border-2 border-swiss-border bg-swiss-surface p-6 md:p-10 hover:border-swiss-burgundy transition-all duration-200 relative group" data-track="embedded">
-                    <div class="absolute top-0 right-0 bg-swiss-burgundyDark text-white font-mono text-[10px] tracking-widest px-3 py-1 uppercase border-l border-b border-swiss-border">
-                        [TRACK: EMBEDDED AI & HARDWARE]
-                    </div>
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                        <div class="lg:col-span-4 border-b lg:border-b-0 lg:border-r border-swiss-border/50 pb-4 lg:pb-0 pr-0 lg:pr-6">
-                            <div class="text-xs font-mono text-swiss-sage mb-1 uppercase">May 2026 — Present | Bengaluru, India</div>
-                            <h3 class="text-2xl font-black tracking-tight uppercase text-white mb-2">PROJECT TRAINEE — EMBEDDED ADAS SOFTWARE ENGINEERING</h3>
-                            <div class="text-sm font-mono text-neutral-400 uppercase">Transportation Business Unit</div>
-                        </div>
-                        <div class="lg:col-span-8 space-y-3 text-sm text-neutral-300 font-normal leading-relaxed">
-                            <ul class="list-disc list-outside ml-4 space-y-2 marker:text-swiss-burgundy">
-                                <li>Developed Python and C++ features for an automotive <strong class="text-white">Surround View System</strong>, including gesture-controlled camera navigation using PyQt5, OpenGL and embedded Linux.</li>
-                                <li>Implemented path-aware gesture interpolation for camera-pose transitions across mouse, touchpad and touchscreen inputs.</li>
-                                <li>Built UDP communication and state synchronization between frontend controls and the C++ rendering pipeline.</li>
-                                <li>Replaced hard-coded camera definitions with JSON configuration and collaborated on SDK, rendering and networking integration across Qualcomm and Texas Instruments platforms.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- EXP 2: FPGA Acceleration (Sphinx Lab) -->
-                <div class="track-item border-2 border-swiss-border bg-swiss-surface p-6 md:p-10 hover:border-swiss-sage transition-all duration-200 relative group" data-track="embedded ai">
-                    <div class="absolute top-0 right-0 bg-swiss-border text-neutral-300 font-mono text-[10px] tracking-widest px-3 py-1 uppercase border-l border-b border-swiss-border">
-                        [TRACK: DUAL DOMAIN / EDGE AI]
-                    </div>
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                        <div class="lg:col-span-4 border-b lg:border-b-0 lg:border-r border-swiss-border/50 pb-4 lg:pb-0 pr-0 lg:pr-6">
-                            <div class="text-xs font-mono text-swiss-sage mb-1 uppercase">May 2026 — Present | Kottayam, India</div>
-                            <h3 class="text-2xl font-black tracking-tight uppercase text-white mb-2">RESEARCH INTERN — FPGA-BASED ML ACCELERATION</h3>
-                            <div class="text-sm font-mono text-neutral-400 uppercase">Sphinx Lab, IIIT Kottayam</div>
-                        </div>
-                        <div class="lg:col-span-8 space-y-3 text-sm text-neutral-300 font-normal leading-relaxed">
-                            <ul class="list-disc list-outside ml-4 space-y-2 marker:text-swiss-sage">
-                                <li>Developing FPGA-accelerated ANN and CNN inference pipelines using <strong class="text-white">hls4ml</strong> for Xilinx ZCU102 platforms through custom AXI-interfaced IP cores.</li>
-                                <li>Implementing quantization-aware neural network architectures and hardware-software co-design techniques to minimize inference latency for Edge AI platforms.</li>
-                                <li>Evaluating model latency, resource utilization (LUTs, DSPs), and deployment trade-offs using Vivado, MATLAB/Simulink, and embedded Linux environments.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+          </figcaption>
+          <span id="art-status" class="sr-only" role="status"></span>
+        </figure>
+        <div class="hero-foot">
+          <span>Electronics & Communication Engineering</span
+          ><span>IIIT Kottayam <span class="muted">/ 2024–2028</span></span
+          ><a
+            href="#work"
+            class="scroll-cue"
+            aria-label="Scroll to explore selected work"
+            >Scroll to explore <span aria-hidden="true">↓</span></a
+          >
         </div>
-    </section>
+      </section>
 
-    <!-- FEATURED REPOSITORIES & SYSTEMS (03) -->
-    <section id="projects" class="border-b-4 border-swiss-border bg-swiss-surfaceAlt relative">
-        <div class="swiss-grid-pattern absolute inset-0 opacity-50 pointer-events-none"></div>
-        <div class="max-w-7xl mx-auto px-4 md:px-8 py-16 relative z-10">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 pb-6 border-b-2 border-swiss-border">
-                <div>
-                    <div class="text-swiss-burgundy font-mono text-sm tracking-widest uppercase mb-2">03. Engineered Systems & Codebases</div>
-                    <h2 class="text-4xl md:text-6xl font-black tracking-tight uppercase">SELECTED PROJECTS</h2>
-                </div>
-                <div class="text-xs font-mono text-neutral-400 mt-2 md:mt-0">
-                    SOURCE: <a href="https://github.com/Ishita-2210" target="_blank" rel="noopener noreferrer" class="text-white underline hover:text-swiss-sage">GITHUB.COM/ISHITA-2210</a>
-                </div>
-            </div>
-
-            <!-- PROJECTS GRID -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="projects-grid">
-                
-                <!-- PROJ 1: Scout AI -->
-                <div class="track-item bg-swiss-bg border-2 border-swiss-border p-6 flex flex-col justify-between hover:border-swiss-sage transition-all duration-150 group" data-track="ai">
-                    <div>
-                        <div class="flex justify-between items-start mb-4">
-                            <span class="text-[10px] font-mono bg-swiss-surface border border-swiss-border px-2 py-0.5 text-swiss-sage uppercase">[AI & GEN-AI TRACK]</span>
-                            <a href="https://github.com/Ishita-2210/scout-ai" aria-label="View Scout AI repository" target="_blank" rel="noopener noreferrer" class="text-neutral-500 group-hover:text-white transition-colors">
-                                <i aria-hidden="true" data-lucide="external-link" class="w-5 h-5"></i>
-                            </a>
-                        </div>
-                        <h3 class="text-2xl font-black tracking-tight uppercase mb-2 group-hover:text-swiss-sage transition-colors">SCOUT AI</h3>
-                        <div class="text-xs font-mono text-neutral-400 mb-4">Jun–Jul 2026 · Initial implementation</div>
-                        <p class="text-sm text-neutral-300 mb-6 leading-relaxed">
-                            Original build: a five-agent assistant using Google ADK, Gemini, SQL retrieval and Serper web search for tool coordination and grounded responses.
-                        </p>
-                        <p class="text-sm text-neutral-300 mb-6 leading-relaxed">
-                            Current repository: a React/FastAPI education-support workspace using Groq and six specialist domains, local PDF references, optional web search and owned conversation history.
-                        </p>
-                    </div>
-                    <div class="pt-4 border-t border-swiss-border/60 flex flex-wrap gap-2 text-[10px] font-mono text-neutral-400">
-                        <span class="bg-swiss-surface px-2 py-1">React / FastAPI</span>
-                        <span class="bg-swiss-surface px-2 py-1">Groq</span>
-                        <span class="bg-swiss-surface px-2 py-1">Retrieval</span>
-                    </div>
-                </div>
-
-                <!-- PROJ 2: TeamForge Recommender -->
-                <div class="track-item bg-swiss-bg border-2 border-swiss-border p-6 flex flex-col justify-between hover:border-swiss-sage transition-all duration-150 group" data-track="ai">
-                    <div>
-                        <div class="flex justify-between items-start mb-4">
-                            <span class="text-[10px] font-mono bg-swiss-surface border border-swiss-border px-2 py-0.5 text-swiss-sage uppercase">[AI & ML TRACK]</span>
-                            <a href="https://github.com/Ishita-2210/teamforge-recommender" aria-label="View TeamForge repository" target="_blank" rel="noopener noreferrer" class="text-neutral-500 group-hover:text-white transition-colors">
-                                <i aria-hidden="true" data-lucide="external-link" class="w-5 h-5"></i>
-                            </a>
-                        </div>
-                        <h3 class="text-2xl font-black tracking-tight uppercase mb-2 group-hover:text-swiss-sage transition-colors">TEAMFORGE ENGINE</h3>
-                        <div class="text-xs font-mono text-neutral-400 mb-4">Nov–Dec 2025 · Recommendation prototype</div>
-                        <p class="text-sm text-neutral-300 mb-6 leading-relaxed">
-                            Teammate ranking from skill compatibility, semantic similarity and collaboration-graph signals. The public source includes a runnable weighted baseline, optional trained rankers and checks using synthetic inputs; model artifacts and validated ranking benchmarks are not bundled.
-                        </p>
-                    </div>
-                    <div class="pt-4 border-t border-swiss-border/60 flex flex-wrap gap-2 text-[10px] font-mono text-neutral-400">
-                        <span class="bg-swiss-surface px-2 py-1">Python</span>
-                        <span class="bg-swiss-surface px-2 py-1">Graph Signals</span>
-                        <span class="bg-swiss-surface px-2 py-1">Optional XGBoost</span>
-                    </div>
-                </div>
-
-                <!-- PROJ 3: BlinkGrid Analytics Dashboard -->
-                <div class="track-item bg-swiss-bg border-2 border-swiss-border p-6 flex flex-col justify-between hover:border-white transition-all duration-150 group" data-track="ai">
-                    <div>
-                        <div class="flex justify-between items-start mb-4">
-                            <span class="text-[10px] font-mono bg-swiss-surface border border-swiss-border px-2 py-0.5 text-neutral-300 uppercase">[FULL STACK & DATA]</span>
-                            <a href="https://github.com/Ishita-2210/blinkgrid-analytics-dashboard" aria-label="View BlinkGrid Analytics repository" target="_blank" rel="noopener noreferrer" class="text-neutral-500 group-hover:text-white transition-colors">
-                                <i aria-hidden="true" data-lucide="external-link" class="w-5 h-5"></i>
-                            </a>
-                        </div>
-                        <h3 class="text-2xl font-black tracking-tight uppercase mb-2 group-hover:text-white transition-colors">BLINKGRID DASHBOARD</h3>
-                        <div class="text-xs font-mono text-neutral-400 mb-4">May 2026 · Customer-support analytics</div>
-                        <p class="text-sm text-neutral-300 mb-6 leading-relaxed">
-                            React customer-support analytics widget with parameterized PostgreSQL aggregation and validated Express REST APIs. Loading, empty and error states accompany HTTP regression checks.
-                        </p>
-                    </div>
-                    <div class="pt-4 border-t border-swiss-border/60 flex flex-wrap gap-2 text-[10px] font-mono text-neutral-400">
-                        <span class="bg-swiss-surface px-2 py-1">React / TS</span>
-                        <span class="bg-swiss-surface px-2 py-1">Express.js</span>
-                        <span class="bg-swiss-surface px-2 py-1">PostgreSQL</span>
-                    </div>
-                </div>
-
-                <!-- PROJ 4: EEG Chess BCI -->
-                <div class="track-item bg-swiss-bg border-2 border-swiss-border p-6 flex flex-col justify-between hover:border-swiss-burgundy transition-all duration-150 group" data-track="embedded ai">
-                    <div>
-                        <div class="flex justify-between items-start mb-4">
-                            <span class="text-[10px] font-mono bg-swiss-burgundyDark border border-swiss-border px-2 py-0.5 text-white uppercase">[EMBEDDED BCI / ONGOING]</span>
-                            <span class="text-xs font-mono text-swiss-sage flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-swiss-sage"></span> ACTIVE</span>
-                        </div>
-                        <h3 class="text-2xl font-black tracking-tight uppercase mb-2 group-hover:text-swiss-burgundy transition-colors">EEG CHESS INTERFACE</h3>
-                        <div class="text-xs font-mono text-neutral-400 mb-4">Ongoing · No public source linked</div>
-                        <p class="text-sm text-neutral-300 mb-6 leading-relaxed">
-                            Developing hands-free chess interaction through EEG signal decoding. An FBCCA-based SSVEP classification pipeline and ESP32 LED stimulation module support the prototype; command decoding and chess-engine integration are ongoing.
-                        </p>
-                    </div>
-                    <div class="pt-4 border-t border-swiss-border/60 flex flex-wrap gap-2 text-[10px] font-mono text-neutral-400">
-                        <span class="bg-swiss-surface px-2 py-1">ESP32</span>
-                        <span class="bg-swiss-surface px-2 py-1">FBCCA / EEG</span>
-                        <span class="bg-swiss-surface px-2 py-1">Signal Processing</span>
-                    </div>
-                </div>
-
-                <!-- PROJ 5: Smart CCTV Traffic System -->
-                <div class="track-item bg-swiss-bg border-2 border-swiss-border p-6 flex flex-col justify-between hover:border-swiss-burgundy transition-all duration-150 group" data-track="embedded ai">
-                    <div>
-                        <div class="flex justify-between items-start mb-4">
-                            <span class="text-[10px] font-mono bg-swiss-burgundyDark border border-swiss-border px-2 py-0.5 text-white uppercase">[EDGE VISION / ONGOING]</span>
-                            <span class="text-xs font-mono text-swiss-sage flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-swiss-sage"></span> ACTIVE</span>
-                        </div>
-                        <h3 class="text-2xl font-black tracking-tight uppercase mb-2 group-hover:text-swiss-burgundy transition-colors">SMART CCTV TRAFFIC</h3>
-                        <div class="text-xs font-mono text-neutral-400 mb-4">Ongoing · No public source linked</div>
-                        <p class="text-sm text-neutral-300 mb-6 leading-relaxed">
-                            Developing a YOLO/OpenCV pipeline to estimate vehicle density from CCTV streams and adapt four-way signal timings. Work on inference latency and deployment on existing embedded CCTV infrastructure is ongoing.
-                        </p>
-                    </div>
-                    <div class="pt-4 border-t border-swiss-border/60 flex flex-wrap gap-2 text-[10px] font-mono text-neutral-400">
-                        <span class="bg-swiss-surface px-2 py-1">YOLO / OpenCV</span>
-                        <span class="bg-swiss-surface px-2 py-1">Edge AI</span>
-                        <span class="bg-swiss-surface px-2 py-1">Low-Latency</span>
-                    </div>
-                </div>
-
-                <!-- PROJ 6: NanoFlow Microplastics Simulation -->
-                <div class="track-item bg-swiss-bg border-2 border-swiss-border p-6 flex flex-col justify-between hover:border-swiss-sage transition-all duration-150 group" data-track="ai">
-                    <div>
-                        <div class="flex justify-between items-start mb-4">
-                            <span class="text-[10px] font-mono bg-swiss-surface border border-swiss-border px-2 py-0.5 text-swiss-sage uppercase">[UPSTREAM FORK / GIS]</span>
-                            <a href="https://github.com/Ishita-2210/nanoparicle_simulation" aria-label="View microplastics visualization fork" target="_blank" rel="noopener noreferrer" class="text-neutral-500 group-hover:text-white transition-colors">
-                                <i aria-hidden="true" data-lucide="external-link" class="w-5 h-5"></i>
-                            </a>
-                        </div>
-                        <h3 class="text-2xl font-black tracking-tight uppercase mb-2 group-hover:text-swiss-sage transition-colors">MICROPLASTICS VISUALIZATION</h3>
-                        <div class="text-xs font-mono text-neutral-400 mb-4">Ishita-2210/nanoparicle_simulation</div>
-                        <p class="text-sm text-neutral-300 mb-6 leading-relaxed">
-                            Maintained fork of <a href="https://github.com/vasu-era/nanoparicle_simulation" target="_blank" rel="noopener noreferrer" class="underline underline-offset-4 hover:text-swiss-sage">vasu-era/nanoparicle_simulation</a>, preserving its Flask/Folium map and optional desktop particle visualization. Upstream authorship is retained; stylized currents and toxicity colors are illustrative heuristics, without established environmental calibration.
-                        </p>
-                    </div>
-                    <div class="pt-4 border-t border-swiss-border/60 flex flex-wrap gap-2 text-[10px] font-mono text-neutral-400">
-                        <span class="bg-swiss-surface px-2 py-1">Python / Flask</span>
-                        <span class="bg-swiss-surface px-2 py-1">Folium</span>
-                        <span class="bg-swiss-surface px-2 py-1">Geospatial</span>
-                    </div>
-                </div>
-
-                <!-- PROJ 7: Mini-Google-Search -->
-                <div class="track-item bg-swiss-bg border-2 border-swiss-border p-6 flex flex-col justify-between hover:border-white transition-all duration-150 group" data-track="ai">
-                    <div>
-                        <div class="flex justify-between items-start mb-4">
-                            <span class="text-[10px] font-mono bg-swiss-surface border border-swiss-border px-2 py-0.5 text-neutral-300 uppercase">[ALGORITHMS & SEARCH]</span>
-                            <a href="https://github.com/Ishita-2210/Mini-Google-Search" aria-label="View Mini Google Search repository" target="_blank" rel="noopener noreferrer" class="text-neutral-500 group-hover:text-white transition-colors">
-                                <i aria-hidden="true" data-lucide="external-link" class="w-5 h-5"></i>
-                            </a>
-                        </div>
-                        <h3 class="text-2xl font-black tracking-tight uppercase mb-2 group-hover:text-white transition-colors">MINI-GOOGLE SEARCH</h3>
-                        <div class="text-xs font-mono text-neutral-400 mb-4">Ishita-2210/Mini-Google-Search</div>
-                        <p class="text-sm text-neutral-300 mb-6 leading-relaxed">
-                            Lightweight text-based search engine engineered from scratch. Implements core document tokenization, inverted indexing structures, and efficient ranking algorithms for fast, precise text retrieval and lookup.
-                        </p>
-                    </div>
-                    <div class="pt-4 border-t border-swiss-border/60 flex flex-wrap gap-2 text-[10px] font-mono text-neutral-400">
-                        <span class="bg-swiss-surface px-2 py-1">Python</span>
-                        <span class="bg-swiss-surface px-2 py-1">Indexing</span>
-                        <span class="bg-swiss-surface px-2 py-1">Algorithms</span>
-                    </div>
-                </div>
-
-                <!-- PROJ 8: Dynamic parking pricing experiments -->
-                <div class="track-item bg-swiss-bg border-2 border-swiss-border p-6 flex flex-col justify-between hover:border-swiss-burgundy transition-all duration-150 group" data-track="ai">
-                    <div>
-                        <div class="flex justify-between items-start mb-4">
-                            <span class="text-[10px] font-mono bg-swiss-burgundyDark border border-swiss-border px-2 py-0.5 text-white uppercase">[PARKING / DATA]</span>
-                            <a href="https://github.com/Ishita-2210/Capstone_iitg" aria-label="View parking pricing experiments repository" target="_blank" rel="noopener noreferrer" class="text-neutral-500 group-hover:text-white transition-colors">
-                                <i aria-hidden="true" data-lucide="external-link" class="w-5 h-5"></i>
-                            </a>
-                        </div>
-                        <h3 class="text-2xl font-black tracking-tight uppercase mb-2 group-hover:text-swiss-burgundy transition-colors">DYNAMIC PARKING PRICING</h3>
-                        <div class="text-xs font-mono text-neutral-400 mb-4">Jul–Aug 2025 · Pricing experiments</div>
-                        <p class="text-sm text-neutral-300 mb-6 leading-relaxed">
-                            Occupancy- and demand-based parking-price experiments. The public source includes pandas pricing heuristics, synthetic-data checks and a separate Pathway CSV pipeline; the original notebook streaming prototype remains preserved and unfinished. Calibration and real-world pricing performance remain unvalidated.
-                        </p>
-                    </div>
-                    <div class="pt-4 border-t border-swiss-border/60 flex flex-wrap gap-2 text-[10px] font-mono text-neutral-400">
-                        <span class="bg-swiss-surface px-2 py-1">Python / pandas</span>
-                        <span class="bg-swiss-surface px-2 py-1">Pricing Heuristics</span>
-                        <span class="bg-swiss-surface px-2 py-1">Pathway CSV Pipeline</span>
-                    </div>
-                </div>
-
-            </div>
+      <section id="work" class="work-section wrap" aria-labelledby="work-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">01 / A few things I’ve made</p>
+            <h2 id="work-title">Curiosity,<br /><em>put to work.</em></h2>
+          </div>
+          <p class="section-intro">
+            From making sense of pixels to finding the right teammate. A
+            selection of projects you can open, inspect and run.
+          </p>
         </div>
-    </section>
-
-    <!-- TECHNICAL SKILLS MATRIX (04) -->
-    <section class="border-b-4 border-swiss-border bg-swiss-bg">
-        <div class="max-w-7xl mx-auto px-4 md:px-8 py-16">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 pb-6 border-b-2 border-swiss-border">
-                <div>
-                    <div class="text-swiss-burgundy font-mono text-sm tracking-widest uppercase mb-2">04. Capabilities & Specifications</div>
-                    <h2 class="text-4xl md:text-6xl font-black tracking-tight uppercase">TECHNICAL SKILLS MATRIX</h2>
-                </div>
-                <div class="text-xs font-mono text-neutral-400 mt-2 md:mt-0 uppercase">
-                    AREAS OF PRACTICE: <span class="text-swiss-sage">SOFTWARE, AI & HARDWARE</span>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 font-mono text-xs">
-                
-                <div class="border-2 border-swiss-border bg-swiss-surface p-6 hover:border-swiss-sage transition-colors">
-                    <div class="text-swiss-sage uppercase font-bold tracking-widest mb-4 pb-3 border-b border-swiss-border text-sm flex items-center gap-2">
-                        <span class="w-2 h-2 bg-swiss-sage inline-block"></span>
-                        [01] PROGRAMMING
-                    </div>
-                    <p class="text-neutral-300 leading-relaxed text-xs">
-                        Python, C++, C, Verilog HDL, MATLAB, SQL, Java, HTML/CSS, TypeScript.
-                    </p>
-                </div>
-
-                <div class="border-2 border-swiss-border bg-swiss-surface p-6 hover:border-swiss-burgundy transition-colors">
-                    <div class="text-swiss-burgundy uppercase font-bold tracking-widest mb-4 pb-3 border-b border-swiss-border text-sm flex items-center gap-2">
-                        <span class="w-2 h-2 bg-swiss-burgundy inline-block"></span>
-                        [02] EMBEDDED & HW
-                    </div>
-                    <p class="text-neutral-300 leading-relaxed text-xs">
-                        FPGA, hls4ml, Xilinx ZCU102, AXI Interfaces, Embedded C/C++, Embedded Linux, ESP32, ADAS, UDP Networking, Hardware-Software Co-design, Vivado, TI SDK Builder.
-                    </p>
-                </div>
-
-                <div class="border-2 border-swiss-border bg-swiss-surface p-6 hover:border-swiss-sage transition-colors">
-                    <div class="text-swiss-sage uppercase font-bold tracking-widest mb-4 pb-3 border-b border-swiss-border text-sm flex items-center gap-2">
-                        <span class="w-2 h-2 bg-swiss-sage inline-block"></span>
-                        [03] GEN-AI & LLMS
-                    </div>
-                    <p class="text-neutral-300 leading-relaxed text-xs">
-                        Google Gemini API, Google ADK, Groq, Multi-Agent Systems, Retrieval-Augmented Generation, Tool/Function Calling, Structured Outputs, Prompt Engineering, Serper API.
-                    </p>
-                </div>
-
-                <div class="border-2 border-swiss-border bg-swiss-surface p-6 hover:border-white transition-colors">
-                    <div class="text-white uppercase font-bold tracking-widest mb-4 pb-3 border-b border-swiss-border text-sm flex items-center gap-2">
-                        <span class="w-2 h-2 bg-white inline-block"></span>
-                        [04] ML & FULL-STACK
-                    </div>
-                    <p class="text-neutral-300 leading-relaxed text-xs">
-                        PyTorch, TensorFlow, Scikit-learn, XGBoost, NumPy, pandas, YOLO, OpenCV, OpenGL, React, FastAPI, Express.js, Flask, PostgreSQL, Git, Linux, PyQt5, CMake, Blender.
-                    </p>
-                </div>
-
-            </div>
-
-            <!-- Leadership Matrix Bar -->
-            <div class="mt-8 p-6 bg-swiss-surfaceAlt border-2 border-swiss-border flex items-center justify-between flex-wrap gap-4 font-mono text-xs">
-                <div>
-                    <span class="text-neutral-500 block uppercase">LEADERSHIP & POSITIONS OF RESPONSIBILITY:</span>
-                    <span class="text-white uppercase mt-1 inline-block">Core Member, Beta Labs (AI/ML) | Placement Cell Coordinator | TEDx IIIT Kottayam PR & Outreach Team</span>
-                </div>
-            </div>
+        <div class="work-toolbar">
+          <div
+            class="filters"
+            role="group"
+            aria-label="Filter selected projects"
+            hidden
+          >
+            <button
+              type="button"
+              data-filter="all"
+              aria-pressed="true"
+              aria-controls="project-grid"
+            >
+              All work <span>06</span></button
+            ><button
+              type="button"
+              data-filter="ai"
+              aria-pressed="false"
+              aria-controls="project-grid"
+            >
+              AI & data</button
+            ><button
+              type="button"
+              data-filter="systems"
+              aria-pressed="false"
+              aria-controls="project-grid"
+            >
+              Systems & interfaces
+            </button>
+          </div>
+          <span
+            id="project-count"
+            class="project-count"
+            role="status"
+            aria-live="polite"
+            >6 projects</span
+          >
         </div>
-    </section>
-
-    <!-- ACADEMIC FOUNDATION & CERTIFICATIONS (05) -->
-    <section class="border-b-4 border-swiss-border bg-swiss-surface">
-        <div class="max-w-7xl mx-auto px-4 md:px-8 py-16 grid grid-cols-1 lg:grid-cols-12 gap-12">
-            
-            <!-- Academic Column (5 cols) -->
-            <div class="lg:col-span-5 space-y-8">
-                <div>
-                    <div class="text-swiss-burgundy font-mono text-sm tracking-widest uppercase mb-2">05. Academic Foundation</div>
-                    <h2 class="text-4xl font-black tracking-tight uppercase mb-6">EDUCATION</h2>
-                    
-                    <div class="border-2 border-swiss-border bg-swiss-bg p-6 relative group hover:border-swiss-burgundy transition-colors">
-                        <div class="text-xs font-mono text-swiss-sage uppercase mb-1">2024 — 2028 | Kottayam, India</div>
-                        <h3 class="text-xl font-black uppercase tracking-tight text-white mb-1">INDIAN INSTITUTE OF INFORMATION TECHNOLOGY KOTTAYAM</h3>
-                        <div class="text-sm text-neutral-300 font-medium mb-6">B.Tech in Electronics and Communication Engineering</div>
-                        
-                        <!-- Subtle CGPA Display -->
-                        <div class="pt-4 border-t border-swiss-border/60 flex items-center justify-between">
-                            <span class="text-[11px] font-mono text-neutral-500 uppercase tracking-widest">Academic Metric:</span>
-                            <span class="text-xs font-mono text-neutral-400 bg-swiss-surface px-3 py-1 border border-swiss-border">CGPA: 8.23 / 10.0</span>
-                        </div>
-                    </div>
-                </div>
+        <div class="project-grid" id="project-grid">
+          <article class="project project-wide" data-category="ai systems">
+            <div class="project-visual visual-entropy">
+              <span class="visual-label">A closer look at pixels</span
+              ><img
+                src="assets/projects/entropy.png"
+                alt="Actual Image Entropy Analyzer workbench with a synthetic landscape, entropy measurements and colour distribution"
+                width="1440"
+                height="1564"
+                loading="lazy"
+                decoding="async"
+              /><span class="visual-stamp" aria-hidden="true">H(X)</span>
             </div>
-
-            <!-- Certifications & Honors Column (7 cols) -->
-            <div class="lg:col-span-7">
-                <div class="text-swiss-burgundy font-mono text-sm tracking-widest uppercase mb-2">06. Learning & Participation</div>
-                <h2 class="text-4xl font-black tracking-tight uppercase mb-6">COURSES & ACHIEVEMENTS</h2>
-
-                <!-- STANDALONE CERTIFICATION CARDS -->
-                <div class="space-y-4 font-mono text-xs">
-                    
-                    <!-- CERT 1: LinkedIn Learning FPGA -->
-                    <div class="border-2 border-swiss-border bg-swiss-bg p-5 hover:border-swiss-sage transition-colors">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-                            <span class="text-white font-bold text-sm uppercase flex items-center gap-2">
-                                <span class="w-1.5 h-1.5 bg-swiss-sage inline-block"></span>
-                                LINKEDIN LEARNING — FPGA DEVELOPMENT
-                            </span>
-                            <span class="text-[10px] text-swiss-sage bg-swiss-surface px-2 py-0.5 border border-swiss-border w-fit">HARDWARE / EMBEDDED</span>
-                        </div>
-                        <p class="text-neutral-400 text-xs leading-relaxed">
-                            Completed hands-on training covering FPGA fundamentals, digital logic design and hardware implementation workflows.
-                        </p>
-                    </div>
-
-                    <!-- CERT 2: IIT Guwahati ML Cert -->
-                    <div class="border-2 border-swiss-border bg-swiss-bg p-5 hover:border-swiss-sage transition-colors">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-                            <span class="text-white font-bold text-sm uppercase flex items-center gap-2">
-                                <span class="w-1.5 h-1.5 bg-swiss-sage inline-block"></span>
-                                MACHINE LEARNING CERTIFICATION — IIT GUWAHATI
-                            </span>
-                            <span class="text-[10px] text-neutral-400 bg-swiss-surface px-2 py-0.5 border border-swiss-border w-fit">TOP 10% RANKING</span>
-                        </div>
-                        <p class="text-neutral-400 text-xs leading-relaxed">
-                            Ranked among the top 10% of participants in an advanced certification program covering supervised learning, deep neural networks, and intelligent systems design.
-                        </p>
-                    </div>
-
-                    <!-- CERT 3: AICTE ATAL FDP Chip-Level Systems -->
-                    <div class="border-2 border-swiss-border bg-swiss-bg p-5 hover:border-swiss-burgundy transition-colors">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-                            <span class="text-white font-bold text-sm uppercase flex items-center gap-2">
-                                <span class="w-1.5 h-1.5 bg-swiss-burgundy inline-block"></span>
-                                AICTE ATAL FDP — CHIP-LEVEL SYSTEMS (CUSAT)
-                            </span>
-                            <span class="text-[10px] text-white bg-swiss-burgundyDark px-2 py-0.5 border border-swiss-border w-fit">SECURE HARDWARE</span>
-                        </div>
-                        <p class="text-neutral-400 text-xs leading-relaxed">
-                            Completed an intensive Faculty Development Program on Secure and Intelligent Chip-Level Systems with specialized emphasis on embedded hardware architectures and secure AI computing.
-                        </p>
-                    </div>
-
-                    <!-- CERT 4: ISRO Hackathon 2025 -->
-                    <div class="border-2 border-swiss-border bg-swiss-bg p-5 hover:border-white transition-colors">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-                            <span class="text-white font-bold text-sm uppercase flex items-center gap-2">
-                                <span class="w-1.5 h-1.5 bg-white inline-block"></span>
-                                ISRO HACKATHON 2025
-                            </span>
-                            <span class="text-[10px] text-neutral-300 bg-swiss-surface px-2 py-0.5 border border-swiss-border w-fit">SPACE APPS / CV</span>
-                        </div>
-                        <p class="text-neutral-400 text-xs leading-relaxed">
-                            Engineered a Python-based computer vision pipeline for automated lunar crater detection from satellite imagery at a national-level AI and Space Applications hackathon.
-                        </p>
-                    </div>
-
-                    <!-- CERT 5: Google Developers Vibe Coding -->
-                    <div class="border-2 border-swiss-border bg-swiss-bg p-5 hover:border-white transition-colors">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
-                            <span class="text-white font-bold text-sm uppercase flex items-center gap-2">
-                                <span class="w-1.5 h-1.5 bg-white inline-block"></span>
-                                GOOGLE DEVELOPERS VIBE CODING
-                            </span>
-                            <span class="text-[10px] text-neutral-300 bg-swiss-surface px-2 py-0.5 border border-swiss-border w-fit">INTENSIVE COHORT</span>
-                        </div>
-                        <p class="text-neutral-400 text-xs leading-relaxed">
-                            Selected for a five-day cohort-based program on AI-assisted software development practices.
-                        </p>
-                    </div>
-
-                    <div class="border-2 border-swiss-border bg-swiss-bg p-5 hover:border-swiss-sage transition-colors">
-                        <div class="text-white font-bold text-sm uppercase mb-2">ALGOUNIVERSITY — DYNAMIC PROGRAMMING CAMP</div>
-                        <p class="text-neutral-400 text-xs leading-relaxed">Completed a program focused on dynamic programming, optimization techniques and algorithmic problem-solving.</p>
-                    </div>
-
-                    <div class="border-2 border-swiss-border bg-swiss-bg p-5 hover:border-swiss-sage transition-colors">
-                        <div class="text-white font-bold text-sm uppercase mb-2">GEEKSFORGEEKS — BUILT AN AI AGENT WITH AGENTFORCE</div>
-                        <p class="text-neutral-400 text-xs leading-relaxed">Completed a hands-on course on Salesforce Agentforce workflows and AI automation.</p>
-                    </div>
-
-                </div>
+            <div class="project-meta">
+              <span>01 / Scientific computing</span
+              ><span>Python · FastAPI · React</span>
             </div>
-
+            <div class="project-title-row">
+              <h3>Image Entropy<br />Analyzer<span class="accent">.</span></h3>
+              <a
+                class="source-arrow"
+                href="https://github.com/Ishita-2210/image-entropy-analyzer"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open Image Entropy Analyzer source"
+                >↗</a
+              >
+            </div>
+            <p>
+              What’s hiding in an image? A workbench for exploring information,
+              structure, colour and compression.
+            </p>
+            <button
+              class="case-button"
+              type="button"
+              data-case="entropy"
+              hidden
+            >
+              Inside the project <span aria-hidden="true">+</span>
+            </button>
+          </article>
+          <article
+            class="project project-narrow project-offset"
+            data-category="ai systems"
+          >
+            <div class="project-visual visual-scout">
+              <span class="visual-label">Education, continued.</span
+              ><img
+                src="assets/projects/scout.png"
+                alt="Actual Scout education-support workspace showing six topics and a new conversation"
+                width="1440"
+                height="1000"
+                loading="lazy"
+                decoding="async"
+              /><span class="scout-spark" aria-hidden="true">✳</span>
+            </div>
+            <div class="project-meta">
+              <span>02 / Applied AI</span><span>Groq · FastAPI · React</span>
+            </div>
+            <div class="project-title-row">
+              <h3>Scout AI<span class="lavender">.</span></h3>
+              <a
+                class="source-arrow"
+                href="https://github.com/Ishita-2210/scout-ai"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open Scout AI source"
+                >↗</a
+              >
+            </div>
+            <p>
+              An education-support assistant for people navigating disruption.
+              Six specialist domains, one place to begin.
+            </p>
+            <button class="case-button" type="button" data-case="scout" hidden>
+              Inside the project <span aria-hidden="true">+</span>
+            </button>
+          </article>
+          <article class="project project-narrow" data-category="ai">
+            <div class="project-visual visual-graph">
+              <img
+                src="assets/projects/teamforge.svg"
+                alt="Original illustration of connected skill and collaboration signals"
+                width="900"
+                height="600"
+                loading="lazy"
+              /><span class="visual-label">The right connections matter</span>
+            </div>
+            <div class="project-meta">
+              <span>03 / Recommendation</span
+              ><span>Python · Graphs · Ranking</span>
+            </div>
+            <div class="project-title-row">
+              <h3>TeamForge<span class="accent">.</span></h3>
+              <a
+                class="source-arrow"
+                href="https://github.com/Ishita-2210/teamforge-recommender"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open TeamForge source"
+                >↗</a
+              >
+            </div>
+            <p>
+              Finding teammates through the overlap of skills, intent and
+              collaboration—not just a keyword match.
+            </p>
+            <button
+              class="case-button"
+              type="button"
+              data-case="teamforge"
+              hidden
+            >
+              Inside the project <span aria-hidden="true">+</span>
+            </button>
+          </article>
+          <article
+            class="project project-wide project-offset"
+            data-category="ai systems"
+          >
+            <div class="project-visual visual-sentinel">
+              <span class="visual-label">A moment. With context.</span
+              ><img
+                src="assets/projects/sentinel.png"
+                alt="Actual SentinelAI event feed showing timestamped temporal events and saved-evidence controls"
+                width="1100"
+                height="500"
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="evidence-orbit" aria-hidden="true">
+                <span></span><span></span><span></span>
+              </div>
+            </div>
+            <div class="project-meta">
+              <span>04 / Perception & systems</span
+              ><span>YOLO · OpenCV · FastAPI</span>
+            </div>
+            <div class="project-title-row">
+              <h3>SentinelAI<span class="lavender">.</span></h3>
+              <a
+                class="source-arrow"
+                href="https://github.com/Ishita-2210/SentinelAI"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open SentinelAI source"
+                >↗</a
+              >
+            </div>
+            <p>
+              Turning video into inspectable events, with timestamps, saved
+              frames and the evidence behind an observation.
+            </p>
+            <button
+              class="case-button"
+              type="button"
+              data-case="sentinel"
+              hidden
+            >
+              Inside the project <span aria-hidden="true">+</span>
+            </button>
+          </article>
+          <article class="project project-wide" data-category="systems">
+            <div class="project-visual visual-blink">
+              <span class="visual-label">Less noise. A clearer picture.</span>
+              <div class="blink-orbits" aria-hidden="true"></div>
+              <img
+                src="assets/projects/blinkgrid.png"
+                alt="Actual BlinkGrid analytics card showing top failure categories and their counts"
+                width="487"
+                height="332"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <div class="project-meta">
+              <span>05 / Full-stack analytics</span
+              ><span>React · Express · PostgreSQL</span>
+            </div>
+            <div class="project-title-row">
+              <h3>BlinkGrid<span class="accent">.</span></h3>
+              <a
+                class="source-arrow"
+                href="https://github.com/Ishita-2210/blinkgrid-analytics-dashboard"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open BlinkGrid source"
+                >↗</a
+              >
+            </div>
+            <p>
+              Customer-support data, distilled into a focused dashboard. From a
+              real SQL query to loading, empty and error states.
+            </p>
+            <button
+              class="case-button"
+              type="button"
+              data-case="blinkgrid"
+              hidden
+            >
+              Inside the project <span aria-hidden="true">+</span>
+            </button>
+          </article>
+          <article
+            class="project project-narrow project-offset"
+            data-category="ai"
+          >
+            <div class="project-visual visual-parking">
+              <img
+                src="assets/projects/parking.svg"
+                alt="Original abstract illustration of changing demand and bounded pricing curves"
+                width="900"
+                height="600"
+                loading="lazy"
+              /><span class="visual-label">A study in changing demand</span>
+            </div>
+            <div class="project-meta">
+              <span>06 / Streaming experiments</span
+              ><span>Python · pandas · Pathway</span>
+            </div>
+            <div class="project-title-row">
+              <h3>
+                Dynamic<br />Parking Pricing<span class="lavender">.</span>
+              </h3>
+              <a
+                class="source-arrow"
+                href="https://github.com/Ishita-2210/Capstone_iitg"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open Dynamic Parking Pricing source"
+                >↗</a
+              >
+            </div>
+            <p>
+              Exploring how occupancy and demand can shape pricing, from
+              notebook studies to a streaming CSV pipeline.
+            </p>
+            <button
+              class="case-button"
+              type="button"
+              data-case="parking"
+              hidden
+            >
+              Inside the project <span aria-hidden="true">+</span>
+            </button>
+          </article>
         </div>
-    </section>
+        <div class="archive-link">
+          <span
+            >More experiments, foundations and forks live in the archive.</span
+          ><a
+            class="text-link"
+            href="https://github.com/Ishita-2210?tab=repositories"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Explore all repositories <span aria-hidden="true">↗</span></a
+          >
+        </div>
+      </section>
 
+      <section id="about" class="about-section">
+        <div class="wrap about-layout">
+          <div class="about-intro">
+            <p class="eyebrow">02 / Beyond the screen</p>
+            <h2>I like the<br /><em>in-between.</em></h2>
+            <p>
+              Between a camera and its controls. A model and its hardware. A
+              problem and the people solving it.
+            </p>
+            <p>
+              That’s where I’m learning to build: across embedded software,
+              machine learning and interfaces that make complex things
+              understandable.
+            </p>
+            <div class="identity-note">
+              <img
+                src="https://avatars.githubusercontent.com/u/214284809?v=4"
+                alt="Ishita’s GitHub avatar"
+                width="56"
+                height="56"
+                loading="lazy"
+              />
+              <div>
+                <strong>Ishita Sahu</strong
+                ><span>ECE · IIIT Kottayam · Class of 2028</span>
+              </div>
+              <span class="identity-star" aria-hidden="true">✳</span>
+            </div>
+          </div>
+          <div class="experience">
+            <p class="eyebrow">What I’m working on</p>
+            <details class="experience-item" open>
+              <summary>
+                <span class="experience-number">01</span
+                ><span
+                  ><span class="role-type">Industry / May 2026–Present</span
+                  ><strong>Embedded ADAS<br />Software Engineering</strong
+                  ><span class="role-place"
+                    >Project Trainee · Transportation Business Unit,
+                    Bengaluru</span
+                  ></span
+                ><span class="detail-plus" aria-hidden="true">+</span>
+              </summary>
+              <div class="experience-body">
+                <p>
+                  Python/C++ camera navigation, gesture interpolation and
+                  PyQt5/OpenGL interfaces. UDP pose synchronization and JSON
+                  configuration for embedded Linux, with TI/Qualcomm integration
+                  work.
+                </p>
+              </div>
+            </details>
+            <details class="experience-item">
+              <summary>
+                <span class="experience-number">02</span
+                ><span
+                  ><span class="role-type">Research / May 2026–Present</span
+                  ><strong>FPGA-Based<br />ML Acceleration</strong
+                  ><span class="role-place"
+                    >Research Intern · Sphinx Lab, IIIT Kottayam</span
+                  ></span
+                ><span class="detail-plus" aria-hidden="true">+</span>
+              </summary>
+              <div class="experience-body">
+                <p>
+                  ANN/CNN inference research using hls4ml, quantization and
+                  custom AXI-interfaced IP targeting Xilinx ZCU102. Working with
+                  Vivado, MATLAB/Simulink and embedded Linux.
+                </p>
+              </div>
+            </details>
+            <div class="education-note">
+              <span class="role-type">The foundation / 2024–2028</span
+              ><strong>B.Tech, Electronics & Communication Engineering</strong
+              ><span
+                >IIIT Kottayam
+                <span class="education-gpa">CGPA 8.23/10</span></span
+              >
+            </div>
+            <div class="resume-links">
+              <span>Two sides of the same curiosity.</span
+              ><a
+                href="https://drive.google.com/file/d/1FmuMeBQ4PY2YFJ3zu1YSvQ8QL5WybObX/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                >AI resume <span aria-hidden="true">↗</span></a
+              ><a
+                href="https://drive.google.com/file/d/1gtRAJ9EjA0Icxhvf6fQJA3jdxVK5lNvS/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Embedded resume <span aria-hidden="true">↗</span></a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="toolbox-section wrap" aria-labelledby="toolbox-title">
+        <div class="section-heading small-heading">
+          <div>
+            <p class="eyebrow">03 / Tools, not labels</p>
+            <h2 id="toolbox-title">A growing <em>toolbox.</em></h2>
+          </div>
+          <p class="section-intro">
+            Different problems call for different tools. These are some of the
+            ones I work with.
+          </p>
+        </div>
+        <div class="toolbox">
+          <div>
+            <span class="tool-number">01</span>
+            <h3>Intelligence</h3>
+            <p>
+              Python, PyTorch, TensorFlow, scikit-learn, XGBoost, NumPy, pandas,
+              YOLO, OpenCV, retrieval and specialist orchestration.
+            </p>
+          </div>
+          <div>
+            <span class="tool-number">02</span>
+            <h3>The physical side</h3>
+            <p>
+              C/C++, Verilog HDL, MATLAB, hls4ml, Vivado, AXI, Xilinx ZCU102,
+              ESP32, embedded Linux, OpenGL and PyQt5.
+            </p>
+          </div>
+          <div>
+            <span class="tool-number">03</span>
+            <h3>The experience</h3>
+            <p>
+              TypeScript, React, FastAPI, Flask, Express, PostgreSQL, SQLite,
+              Git, CMake and GitHub Actions.
+            </p>
+          </div>
+        </div>
+        <div class="notebook">
+          <div class="notebook-title">
+            <span class="little-star" aria-hidden="true">✳</span>
+            <h3>Still in the notebook.</h3>
+            <span class="note-label">Ongoing explorations</span>
+          </div>
+          <div class="notebook-grid">
+            <p>
+              <strong>EEG → chess</strong>Exploring FBCCA/SSVEP decoding and
+              ESP32 stimulation for hands-free interaction. Integration is
+              ongoing.
+            </p>
+            <p>
+              <strong>Seeing traffic differently</strong>YOLO/OpenCV research
+              into vehicle density and four-way signal timing. Separate from
+              SentinelAI.
+            </p>
+          </div>
+          <p class="note-fine">
+            These ongoing projects don’t have public source in this account yet.
+          </p>
+        </div>
+        <details class="learning">
+          <summary>
+            Learning, community & the things around the work
+            <span aria-hidden="true">+</span>
+          </summary>
+          <div class="learning-content">
+            <div>
+              <h3>Always learning</h3>
+              <ul>
+                <li>Machine Learning certification · IIT Guwahati</li>
+                <li>FPGA Development · LinkedIn Learning</li>
+                <li>
+                  Secure and Intelligent Chip-Level Systems · AICTE ATAL FDP,
+                  CUSAT
+                </li>
+                <li>Google Developers Vibe Coding Intensive</li>
+                <li>AlgoUniversity Dynamic Programming Camp</li>
+                <li>GeeksforGeeks Agentforce course</li>
+                <li>
+                  ISRO Hackathon 2025 · lunar-crater computer-vision
+                  participation
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3>Building with people</h3>
+              <ul>
+                <li>Core Member · Beta Labs, AI/ML</li>
+                <li>Placement Cell Coordinator</li>
+                <li>PR & Outreach · TEDx IIIT Kottayam</li>
+              </ul>
+              <p>
+                Earlier explorations include
+                <a
+                  href="https://github.com/Ishita-2210/Mini-Google-Search"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Mini Google Search</a
+                >
+                and NumPy learning foundations. My
+                <a
+                  href="https://github.com/Ishita-2210/green-fleet-optimizer"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >Green Fleet</a
+                >
+                and
+                <a
+                  href="https://github.com/Ishita-2210/nanoparicle_simulation"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >microplastics visualization</a
+                >
+                repositories are maintained forks of work by
+                <a
+                  href="https://github.com/nidhiiiii0707/green-fleet-optimizer"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >nidhiiiii0707</a
+                >
+                and
+                <a
+                  href="https://github.com/vasu-era/nanoparicle_simulation"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >vasu-era</a
+                >, respectively. The microplastics visualization is illustrative
+                and uncalibrated.
+              </p>
+            </div>
+          </div>
+        </details>
+      </section>
+
+      <section
+        id="contact"
+        class="contact-section wrap"
+        aria-labelledby="contact-title"
+      >
+        <p class="eyebrow">04 / Keep the conversation going</p>
+        <div class="contact-heading">
+          <h2 id="contact-title">Got a good<br /><em>what if?</em></h2>
+          <a
+            class="contact-orb"
+            href="mailto:ishitasahu2210@gmail.com"
+            aria-label="Let’s talk: email Ishita Sahu"
+            ><span aria-hidden="true">↗</span><span>Let’s talk</span></a
+          >
+        </div>
+        <div class="contact-bottom">
+          <div>
+            <a class="email-link" href="mailto:ishitasahu2210@gmail.com"
+              >ishitasahu2210@gmail.com</a
+            ><button type="button" id="copy-email" hidden>
+              Copy email <span aria-hidden="true">⧉</span></button
+            ><span id="copy-status" role="status" class="copy-status"></span>
+          </div>
+          <div class="social-links">
+            <a
+              href="https://github.com/Ishita-2210"
+              target="_blank"
+              rel="noopener noreferrer"
+              >GitHub ↗</a
+            ><a
+              href="https://www.linkedin.com/in/ishita-sahu-8b3165326/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >LinkedIn ↗</a
+            ><a
+              href="https://github.com/Ishita-2210/Ishita-2210/blob/main/RESUME.md"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Resume overview ↗</a
+            >
+          </div>
+        </div>
+      </section>
     </main>
 
-    <!-- CLEAN FOOTER TERMINAL -->
-    <footer class="bg-black border-t-4 border-swiss-border py-12 text-xs font-mono uppercase tracking-widest">
-        <div class="max-w-7xl mx-auto px-4 md:px-8 flex flex-col md:flex-row items-center justify-between gap-6 text-neutral-500">
-            <div>
-                <span class="text-white font-bold">ISHITA SAHU</span> — PORTFOLIO & SYSTEMS ARCHIVE.
-            </div>
-            <div class="flex gap-6 text-neutral-400">
-                <a href="https://github.com/Ishita-2210" target="_blank" rel="noopener noreferrer" class="hover:text-swiss-sage transition-colors">GITHUB</a>
-                <a href="https://www.linkedin.com/in/ishita-sahu-8b3165326/" target="_blank" rel="noopener noreferrer" class="hover:text-swiss-sage transition-colors">LINKEDIN</a>
-                <a href="mailto:ishitasahu2210@gmail.com" class="hover:text-swiss-burgundy transition-colors">EMAIL</a>
-            </div>
-        </div>
+    <footer class="site-footer wrap">
+      <a class="wordmark" href="#top"
+        >ishita<span class="wordmark-dot">.</span></a
+      ><span>Made of code, circuits & curiosity.</span
+      ><a href="#top">Back to top ↑</a>
     </footer>
 
-    <!-- INTERACTIVE ROLE FILTER SCRIPT -->
-    <script>
-        // Filtering remains available if the optional icon CDN is unavailable.
-        if (window.lucide) lucide.createIcons();
-
-        // Track Filtering Engine
-        function filterTrack(track, button) {
-            // Update button styles
-            const buttons = document.querySelectorAll('.track-btn');
-            buttons.forEach(btn => {
-                btn.classList.remove('active', 'active-sage');
-                btn.classList.add('text-neutral-300');
-                btn.setAttribute('aria-pressed', String(btn === button));
-            });
-
-            if (track === 'all') {
-                button.classList.add('active');
-                document.getElementById('current-track-label').innerText = 'ALL SYSTEMS';
-                document.getElementById('current-track-label').className = 'text-white font-bold';
-            } else if (track === 'ai') {
-                button.classList.add('active-sage');
-                document.getElementById('current-track-label').innerText = 'AI & GENERATIVE TRACK';
-                document.getElementById('current-track-label').className = 'text-swiss-sage font-bold';
-            } else if (track === 'embedded') {
-                button.classList.add('active');
-                document.getElementById('current-track-label').innerText = 'EMBEDDED & HARDWARE TRACK';
-                document.getElementById('current-track-label').className = 'text-swiss-burgundy font-bold';
-            }
-            button.classList.remove('text-neutral-300');
-
-            // Filter items
-            const items = document.querySelectorAll('.track-item');
-            items.forEach(item => {
-                const itemTracks = item.dataset.track.split(/\s+/);
-                item.hidden = track !== 'all' && !itemTracks.includes(track);
-            });
-        }
-    </script>
-</body>
+    <dialog id="case-dialog" aria-labelledby="case-title">
+      <button
+        type="button"
+        class="dialog-close"
+        aria-label="Close project notes"
+      >
+        ×
+      </button>
+      <div class="case-content">
+        <p id="case-category" class="eyebrow"></p>
+        <h2 id="case-title"></h2>
+        <p id="case-description"></p>
+        <div
+          class="case-image-wrap"
+          tabindex="0"
+          role="region"
+          aria-label="Project image, scroll to explore"
+        >
+          <img id="case-image" alt="" />
+        </div>
+        <div id="case-sections"></div>
+        <a
+          id="case-source"
+          class="button button-lime"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Open source code <span aria-hidden="true">↗</span></a
+        >
+      </div>
+    </dialog>
+  </body>
 </html>
