@@ -66,6 +66,14 @@ summary:focus-visible,
   line-height: 1.55;
   color: #c1909a;
 }
+.experience-organization {
+  font:
+    11px/1.7 "JetBrains Mono",
+    monospace;
+  color: #b4c4aa;
+  margin-top: -5px;
+  margin-bottom: 14px;
+}
 .experience-location {
   font:
     12px "JetBrains Mono",
@@ -222,6 +230,50 @@ summary:focus-visible,
 }
 .art-controls button {
   font-size: 10px;
+}
+.signal-study figcaption {
+  flex-direction: row;
+  align-items: center;
+}
+.art-controls {
+  gap: 5px;
+  justify-content: flex-end;
+}
+.art-controls button,
+.art-controls button:first-child {
+  width: 30px;
+  height: 30px;
+  padding: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #87968a;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  background: transparent;
+  transition:
+    color 160ms,
+    border-color 160ms,
+    background 160ms;
+}
+.art-controls button:hover,
+.art-controls button:focus-visible {
+  color: #d5ff68;
+  border-color: #64715f;
+  background: #1d2721;
+}
+.art-controls svg {
+  width: 15px;
+  height: 15px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+#motion-toggle[data-paused="true"] .icon-pause,
+#motion-toggle[data-paused="false"] .icon-play {
+  display: none;
 }
 .signal-stage canvas {
   touch-action: pan-y;

@@ -24,13 +24,13 @@ Open http://127.0.0.1:8000/. The site uses static HTML, local CSS and JavaScript
 
 The All / AI / Embedded track controls filter experience and project cards. Section navigation links jump to each major part of the page. Six **Project details** buttons open native dialogs with implementation notes, evidence and scope.
 
-The signal sculpture supports three forms, pause/resume and reduced-motion preferences. It pauses offscreen or when the tab is hidden and remembers an explicit pause. Without JavaScript, local styling, all experience/project content and links remain available; the static SVG artwork replaces the canvas and enhancement-only buttons stay hidden.
+The signal sculpture slowly tumbles, breathes and morphs between three forms, with moving light trails. Discreet icon controls support manual form changes and pause/resume, with reduced-motion preferences respected. It pauses offscreen or when the tab is hidden and remembers an explicit pause. Without JavaScript, local styling, all experience/project content and links remain available; the static SVG artwork replaces the canvas and enhancement-only buttons stay hidden.
 
 ## Visuals and factual scope
 
 The four PNGs in `assets/projects/` are unchanged screenshots of Image Entropy Analyzer's synthetic-landscape workbench, Scout's education-support interface, SentinelAI's temporal event feed and BlinkGrid's populated analytics card. `teamforge.svg` and `parking.svg` are original illustrations, not application screenshots or measured results.
 
-Project copy distinguishes historical resume implementations from the maintained repositories. Ongoing EEG and traffic research is labelled; maintained forks credit their upstream authors. Experience uses the organization/lab labels supplied in the resumes. No private datasets, resume PDFs, phone numbers or credentials are stored here.
+Project copy distinguishes historical resume implementations from the maintained repositories. Ongoing EEG and traffic research is labelled; maintained forks credit their upstream authors. Experience highlights Tata Elxsi (Transportation Business Unit) and Sphinx Lab (IIIT Kottayam), using the owner-confirmed employer name and the resume role details. No private datasets, resume PDFs, phone numbers or credentials are stored here.
 
 ## Verification
 

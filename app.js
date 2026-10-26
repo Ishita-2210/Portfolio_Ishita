@@ -232,103 +232,171 @@ if (context) {
     "A field of possibilities",
     "An orbit of ideas",
   ];
+  const rings = 24,
+    segments = 128,
+    stride = (segments + 1) * 3;
+  const forms = [0, 1, 2].map((form) => {
+    const points = new Float32Array(rings * stride);
+    for (let strand = 0; strand < rings; strand++) {
+      const v =
+        form === 1
+          ? ((strand + 1) * Math.PI) / (rings + 1)
+          : (strand * Math.PI * 2) / rings;
+      for (let step = 0; step <= segments; step++) {
+        const u = (step * Math.PI * 2) / segments;
+        let p;
+        if (form === 1)
+          p = [
+            1.85 * Math.sin(v) * Math.cos(u),
+            1.85 * Math.cos(v),
+            1.85 * Math.sin(v) * Math.sin(u),
+          ];
+        else if (form === 2)
+          p = [
+            (1.45 + 0.48 * Math.cos(v)) * Math.cos(u),
+            0.48 * Math.sin(v),
+            (1.45 + 0.48 * Math.cos(v)) * Math.sin(u),
+          ];
+        else {
+          const radius = 1.32 + 0.38 * Math.cos(3 * u);
+          p = [
+            (radius + 0.24 * Math.cos(v)) * Math.cos(2 * u),
+            0.68 * Math.sin(3 * u) + 0.24 * Math.sin(v),
+            (radius + 0.24 * Math.cos(v)) * Math.sin(2 * u),
+          ];
+        }
+        points.set(p, strand * stride + step * 3);
+      }
+    }
+    return points;
+  });
+  const points = forms[0].slice();
+  let source = forms[0],
+    target = forms[0],
+    mode = 0;
   let width = 0,
     height = 0,
     frame = 0,
     lastPaint = 0,
-    phase = 0,
-    mode = 0;
-  let userPaused = false;
-  let paused = reducedMotion.matches,
-    visible = true,
-    pointerX = 0,
+    elapsed = 0,
+    lastChange = 0,
+    transitionStart = 0;
+  let transitioning = false,
+    userPaused = false,
+    paused = reducedMotion.matches,
+    visible = true;
+  let pointerX = 0,
     pointerY = 0,
     tiltX = 0,
     tiltY = 0;
   motionButton.hidden = false;
   formButton.hidden = false;
   function updateMotionLabel() {
-    motionButton.textContent = paused ? "Resume motion" : "Pause motion";
+    const label = paused ? "Resume motion" : "Pause motion";
+    motionButton.setAttribute("aria-label", label);
+    motionButton.title = label;
+    motionButton.dataset.paused = String(paused);
   }
-  function project(x, y, z, angle) {
-    const a = angle + tiltX,
-      b = -0.36 + tiltY;
-    const xx = x * Math.cos(a) + z * Math.sin(a),
-      zz = -x * Math.sin(a) + z * Math.cos(a);
-    const yy = y * Math.cos(b) - zz * Math.sin(b),
-      depth = y * Math.sin(b) + zz * Math.cos(b);
-    const scale = Math.min(width, height) * 0.185;
-    const perspective = 5 / (5 + depth * 0.22);
-    return [
-      width * 0.5 + xx * scale * perspective,
-      height * 0.5 + yy * scale * perspective,
-      depth,
-    ];
-  }
-  function point(u, v) {
-    if (mode === 1)
-      return [
-        1.85 * Math.sin(v) * Math.cos(u),
-        1.85 * Math.cos(v),
-        1.85 * Math.sin(v) * Math.sin(u),
-      ];
-    if (mode === 2)
-      return [
-        (1.45 + 0.48 * Math.cos(v)) * Math.cos(u),
-        0.48 * Math.sin(v),
-        (1.45 + 0.48 * Math.cos(v)) * Math.sin(u),
-      ];
-    const radius = 1.32 + 0.38 * Math.cos(3 * u);
-    const tube = 0.24;
-    return [
-      (radius + tube * Math.cos(v)) * Math.cos(2 * u),
-      0.68 * Math.sin(3 * u) + tube * Math.sin(v),
-      (radius + tube * Math.cos(v)) * Math.sin(2 * u),
-    ];
+  function changeForm(next, announce = false) {
+    source = points.slice();
+    mode = next;
+    target = forms[mode];
+    transitionStart = elapsed;
+    lastChange = elapsed;
+    transitioning = !paused;
+    if (paused) points.set(target);
+    if (announce) artStatus.textContent = names[mode];
   }
   function draw() {
     if (!width || !height) return;
+    if (!paused && elapsed - lastChange >= 14)
+      changeForm((mode + 1) % forms.length);
+    if (transitioning) {
+      const progress = Math.min(1, (elapsed - transitionStart) / 2.8);
+      const blend = progress * progress * (3 - 2 * progress);
+      for (let i = 0; i < points.length; i++)
+        points[i] = source[i] + (target[i] - source[i]) * blend;
+      if (progress === 1) transitioning = false;
+    }
+    tiltX += (pointerX - tiltX) * 0.06;
+    tiltY += (pointerY - tiltY) * 0.06;
+    const yaw = 0.25 + elapsed * 0.38 + tiltX;
+    const pitch = -0.36 + Math.sin(elapsed * 0.47) * 0.32 + tiltY;
+    const roll = -0.18 + Math.sin(elapsed * 0.31) * 0.2;
+    const ca = Math.cos(yaw),
+      sa = Math.sin(yaw),
+      cb = Math.cos(pitch),
+      sb = Math.sin(pitch),
+      cc = Math.cos(roll),
+      sc = Math.sin(roll);
+    const scale =
+      Math.min(width, height) * 0.205 * (1 + 0.045 * Math.sin(elapsed * 0.8));
+    const float = Math.sin(elapsed * 0.52) * 5;
+    function project(x, y, z) {
+      const xx = x * ca + z * sa,
+        zz = -x * sa + z * ca;
+      const yy = y * cb - zz * sb,
+        depth = y * sb + zz * cb;
+      const perspective = 5 / (5 + depth * 0.22);
+      return [
+        width * 0.5 + (xx * cc - yy * sc) * scale * perspective,
+        height * 0.5 + (xx * sc + yy * cc) * scale * perspective + float,
+      ];
+    }
     context.clearRect(0, 0, width, height);
-    tiltX += (pointerX - tiltX) * 0.04;
-    tiltY += (pointerY - tiltY) * 0.04;
-    const angle = phase * 0.27;
-    const rings = mode === 1 ? 17 : 23;
     for (let strand = 0; strand < rings; strand++) {
-      const v =
-        mode === 1
-          ? ((strand + 1) * Math.PI) / (rings + 1)
-          : (strand * Math.PI * 2) / rings;
       const blend = strand / (rings - 1);
-      const r = Math.round(213 + (185 - 213) * blend),
-        g = Math.round(255 + (164 - 255) * blend),
-        b = Math.round(104 + (255 - 104) * blend);
-      context.strokeStyle =
-        "rgba(" + r + "," + g + "," + b + "," + (mode === 1 ? 0.52 : 0.6) + ")";
-      context.lineWidth = mode === 1 ? 0.8 : 1.05;
+      const r = Math.round(213 - 28 * blend),
+        g = Math.round(255 - 91 * blend),
+        b = Math.round(104 + 151 * blend);
+      context.strokeStyle = `rgba(${r},${g},${b},${0.48 + 0.1 * Math.sin(elapsed * 0.22 + strand * 0.15)})`;
+      context.lineWidth = strand % 3 === 0 ? 1.15 : 0.85;
       context.beginPath();
-      for (let step = 0; step <= 135; step++) {
-        const p = point((step * Math.PI * 2) / 135, v);
-        const q = project(p[0], p[1], p[2], angle);
+      for (let step = 0; step <= segments; step++) {
+        const i = strand * stride + step * 3;
+        const q = project(points[i], points[i + 1], points[i + 2]);
         if (!step) context.moveTo(q[0], q[1]);
         else context.lineTo(q[0], q[1]);
       }
       context.stroke();
     }
-    for (let i = 0; i < 7; i++) {
-      const u = (i * Math.PI * 2) / 7 + phase * 0.12;
-      const p = point(u, i * 0.8);
-      const q = project(p[0], p[1], p[2], angle);
-      context.fillStyle = i % 2 ? "#b9a4ff" : "#d5ff68";
-      context.beginPath();
-      context.arc(q[0], q[1], i % 3 === 0 ? 2.8 : 1.5, 0, Math.PI * 2);
-      context.fill();
+    for (let particle = 0; particle < 12; particle++) {
+      const strand = (particle * 5) % rings;
+      const direction = particle % 2 ? 1 : -1;
+      for (let tail = 4; tail >= 0; tail--) {
+        const position =
+          ((((particle * 0.071 +
+            elapsed * 0.09 * direction -
+            tail * 0.007 * direction) %
+            1) +
+            1) %
+            1) *
+          segments;
+        const step = Math.floor(position),
+          fraction = position - step;
+        const i = strand * stride + step * 3;
+        const q = project(
+          points[i] + (points[i + 3] - points[i]) * fraction,
+          points[i + 1] + (points[i + 4] - points[i + 1]) * fraction,
+          points[i + 2] + (points[i + 5] - points[i + 2]) * fraction,
+        );
+        context.globalAlpha = tail === 0 ? 0.95 : 0.24 - tail * 0.04;
+        context.fillStyle = particle % 2 ? "#b9a4ff" : "#d5ff68";
+        context.shadowColor = context.fillStyle;
+        context.shadowBlur = tail === 0 ? 7 : 0;
+        context.beginPath();
+        context.arc(q[0], q[1], tail === 0 ? 2.2 : 1.1, 0, Math.PI * 2);
+        context.fill();
+      }
     }
+    context.shadowBlur = 0;
+    context.globalAlpha = 1;
   }
   function tick(timestamp) {
     frame = 0;
     if (paused || !visible || document.hidden) return;
     if (timestamp - lastPaint >= 32) {
-      phase += 0.012;
+      elapsed += lastPaint ? Math.min((timestamp - lastPaint) / 1000, 0.08) : 0;
       draw();
       lastPaint = timestamp;
     }
@@ -337,6 +405,7 @@ if (context) {
   function schedule() {
     cancelAnimationFrame(frame);
     frame = 0;
+    lastPaint = 0;
     if (!paused && visible && !document.hidden)
       frame = requestAnimationFrame(tick);
     else draw();
@@ -369,8 +438,7 @@ if (context) {
     schedule();
   });
   formButton.addEventListener("click", () => {
-    mode = (mode + 1) % 3;
-    artStatus.textContent = names[mode];
+    changeForm((mode + 1) % forms.length, true);
     draw();
   });
   reducedMotion.addEventListener("change", (event) => {
