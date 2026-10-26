@@ -140,30 +140,30 @@ const projectNotes = {
   },
 };
 
-const filterButtons = [...document.querySelectorAll("[data-filter]")];
-const projects = [...document.querySelectorAll(".project[data-category]")];
-document.querySelector(".filters").hidden = false;
+const filterButtons = [...document.querySelectorAll(".track-btn")];
+document.querySelector('[aria-label="Filter experience and projects"]').hidden =
+  false;
 filterButtons.forEach((button) =>
   button.addEventListener("click", () => {
-    const filter = button.dataset.filter;
-    filterButtons.forEach((item) =>
-      item.setAttribute("aria-pressed", String(item === button)),
-    );
-    let count = 0;
-    projects.forEach((project) => {
-      project.hidden =
-        filter !== "all" &&
-        !project.dataset.category.split(" ").includes(filter);
-      if (!project.hidden) count++;
+    const track = button.dataset.filter;
+    filterButtons.forEach((item) => {
+      item.setAttribute("aria-pressed", String(item === button));
+      item.classList.remove("active", "active-sage");
+      item.classList.toggle("text-neutral-300", item !== button);
     });
-    document
-      .querySelector("#project-grid")
-      .classList.toggle("is-filtered", filter !== "all");
-    document.querySelector("#project-count").textContent =
-      count + (count === 1 ? " project" : " projects");
+    button.classList.add(track === "ai" ? "active-sage" : "active");
+    const label = document.querySelector("#current-track-label");
+    label.textContent = {
+      all: "ALL SYSTEMS",
+      ai: "AI & GENERATIVE TRACK",
+      embedded: "EMBEDDED & HARDWARE TRACK",
+    }[track];
+    document.querySelectorAll(".track-item").forEach((item) => {
+      item.hidden =
+        track !== "all" && !item.dataset.track.split(/\s+/).includes(track);
+    });
   }),
 );
-
 const dialog = document.querySelector("#case-dialog");
 let lastCaseButton = null;
 if (typeof dialog.showModal === "function") {
@@ -217,20 +217,6 @@ if (typeof dialog.showModal === "function") {
     document.body.classList.remove("dialog-open");
     if (lastCaseButton?.isConnected)
       lastCaseButton.focus({ preventScroll: true });
-  });
-}
-
-const copyButton = document.querySelector("#copy-email");
-if (navigator.clipboard?.writeText) {
-  copyButton.hidden = false;
-  copyButton.addEventListener("click", async () => {
-    const status = document.querySelector("#copy-status");
-    try {
-      await navigator.clipboard.writeText("ishitasahu2210@gmail.com");
-      status.textContent = "Copied. Say hello!";
-    } catch {
-      status.textContent = "Use the email link above.";
-    }
   });
 }
 

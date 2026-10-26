@@ -1,41 +1,43 @@
-# Ishita Sahu — code, circuits & curiosity
+# Ishita Sahu — engineering portfolio
 
-A personal portfolio exploring intelligent software, embedded systems and hardware-aware machine learning. Near-black, acid lime and lavender; oversized type, an original moving signal sculpture and six projects you can inspect.
+A structured portfolio for embedded ADAS software, FPGA research and applied AI. The original dark grid, sage/burgundy palette, two-column introduction and full experience cards are retained, with original signal artwork and genuine project screenshots.
 
 [Live portfolio](https://portfolioishita-nine.vercel.app/) · [GitHub](https://github.com/Ishita-2210) · [LinkedIn](https://www.linkedin.com/in/ishita-sahu-8b3165326/)
 
-## Run locally
+## Local preview
 
-No package installation or build step is required. From the repository root:
+No package installation or build step is required:
 
 ```sh
 python -m http.server 8000 --bind 127.0.0.1
 ```
 
-Open http://127.0.0.1:8000/. `index.html`, `styles.css` and `app.js` provide the complete static application. Google Fonts supplies Space Grotesk and Instrument Serif, with local system-font fallbacks. The profile avatar loads from GitHub. There is no backend, account system or contact-form service.
+Open http://127.0.0.1:8000/. The site uses static HTML, local CSS and JavaScript. `assets/layout.css` contains the generated utility styles for the retained Tailwind v3 theme; `styles.css` adds imagery, artwork, experience typography and dialogs. Icons are inline SVG. Google Fonts and the GitHub avatar are the only external display resources; system-font fallbacks are supplied.
 
-## Explore
+## Page structure
 
-- Switch between three original canvas signal forms, or pause the motion. Animation respects reduced-motion preferences and suspends while offscreen or the page is hidden.
-- Filter selected projects by subject and open **Inside the project** for implementation notes, evidence and scope. Native dialogs support Escape, keyboard navigation and focus restoration.
-- Expand experience and learning entries, open the two original resume links, or copy the public email address.
+1. Identity, introduction, public contact and both original resume links.
+2. Professional experience, with workplace/lab, role, dates, location and responsibilities shown in full.
+3. Six featured public builds with screenshots or original illustrations, followed by ongoing and earlier explorations.
+4. Technical skills and community roles.
+5. Education, courses and participation.
 
-All project summaries, repository links, resume links, contact links and native expandable entries work without JavaScript. Enhancement-only controls appear when available; an original SVG replaces the canvas artwork. The page includes visible keyboard focus, a skip link, descriptive link names and live status updates.
+The All / AI / Embedded track controls filter experience and project cards. Section navigation links jump to each major part of the page. Six **Project details** buttons open native dialogs with implementation notes, evidence and scope.
 
-## Project imagery and content
+The signal sculpture supports three forms, pause/resume and reduced-motion preferences. It pauses offscreen or when the tab is hidden and remembers an explicit pause. Without JavaScript, local styling, all experience/project content and links remain available; the static SVG artwork replaces the canvas and enhancement-only buttons stay hidden.
 
-The four PNGs in `assets/projects/` are unchanged screenshots from the corresponding maintained repositories: Image Entropy Analyzer's synthetic-landscape workbench, Scout's six-topic workspace, SentinelAI's temporal event feed and BlinkGrid's populated analytics card. `teamforge.svg` and `parking.svg` are original abstract illustrations, not application screenshots or measured results. The favicon and hero artwork are original vector/canvas drawings.
+## Visuals and factual scope
 
-Case notes distinguish Scout's historical ADK/Gemini design from its maintained Groq implementation, explain TeamForge's reproducible ranking behavior without repeating unverified benchmarks, and preserve the distinction between the parking notebook experiments and the separate Pathway pipeline. Ongoing EEG and traffic research is labelled without implying public source is available. Maintained forks retain upstream attribution.
+The four PNGs in `assets/projects/` are unchanged screenshots of Image Entropy Analyzer's synthetic-landscape workbench, Scout's education-support interface, SentinelAI's temporal event feed and BlinkGrid's populated analytics card. `teamforge.svg` and `parking.svg` are original illustrations, not application screenshots or measured results.
 
-The two existing external resume links are retained. No resume PDFs, phone numbers, credentials or private datasets are stored here.
+Project copy distinguishes historical resume implementations from the maintained repositories. Ongoing EEG and traffic research is labelled; maintained forks credit their upstream authors. Experience uses the organization/lab labels supplied in the resumes. No private datasets, resume PDFs, phone numbers or credentials are stored here.
 
-## Check changes
+## Verification
 
-Preview desktop and narrow mobile widths. Check all filters, six project dialogs, Escape and restored focus, experience/learning expansion, artwork controls and email copying. Scroll through the page so lazy images load before taking a full-page screenshot. Also check reduced motion, JavaScript disabled, keyboard-only navigation and accessibility. This repository has no package-based build or automated test dependency.
+Check desktop and narrow mobile layouts, all three track filters, section anchors, six project dialogs, Escape/focus restoration, keyboard access, loaded images, reduced motion and JavaScript disabled. Scroll through lazy images before capturing a full-page screenshot. There is no package-based test dependency or build command.
 
 ## Deployment
 
-The existing Vercel project `portfolio_ishita` is connected to `Ishita-2210/Portfolio_Ishita`, with `main` as its production branch. Pushes to `main` request production deployments for [the live portfolio](https://portfolioishita-nine.vercel.app/). The framework preset is **Other**, using the repository root; no build command is needed.
+Vercel project `portfolio_ishita` is connected to `Ishita-2210/Portfolio_Ishita`. Pushes to `main` request production deployment at [the existing public URL](https://portfolioishita-nine.vercel.app/), using the repository root and the **Other** framework preset.
 
-After a push, confirm that Vercel reports **Ready** for the expected commit and verify the public page and its assets.
+After a push, confirm **Ready** for the expected commit and verify the public page and its local assets.
