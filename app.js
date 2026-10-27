@@ -162,6 +162,9 @@ filterButtons.forEach((button) =>
       item.hidden =
         track !== "all" && !item.dataset.track.split(/\s+/).includes(track);
     });
+    document.querySelector("#experience-empty").hidden = [
+      ...document.querySelectorAll(".experience-card"),
+    ].some((item) => !item.hidden);
   }),
 );
 const dialog = document.querySelector("#case-dialog");

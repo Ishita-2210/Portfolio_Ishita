@@ -1,6 +1,6 @@
 # Ishita Sahu — engineering portfolio
 
-A structured portfolio for embedded ADAS software, FPGA research and applied AI. The original dark grid, sage/burgundy palette, two-column introduction and full experience cards are retained, with original signal artwork and genuine project screenshots.
+A structured portfolio for embedded ADAS software, machine learning and applied AI. The original dark grid, sage/burgundy palette, two-column introduction and full experience cards are retained, with original signal artwork and genuine project screenshots.
 
 [Live portfolio](https://portfolioishita-nine.vercel.app/) · [GitHub](https://github.com/Ishita-2210) · [LinkedIn](https://www.linkedin.com/in/ishita-sahu-8b3165326/)
 
@@ -17,7 +17,7 @@ Open http://127.0.0.1:8000/. The site uses static HTML, local CSS and JavaScript
 ## Page structure
 
 1. Identity, introduction, public contact and both original resume links.
-2. Professional experience, with workplace/lab, role, dates, location and responsibilities shown in full.
+2. Professional experience, with workplace, role, dates, location and responsibilities shown in full.
 3. Six featured public builds with screenshots or original illustrations, followed by ongoing and earlier explorations.
 4. Technical skills and community roles.
 5. Education, courses and participation.
@@ -30,7 +30,7 @@ The signal sculpture slowly tumbles, breathes and morphs between three forms, wi
 
 The four PNGs in `assets/projects/` are unchanged screenshots of Image Entropy Analyzer's synthetic-landscape workbench, Scout's education-support interface, SentinelAI's temporal event feed and BlinkGrid's populated analytics card. `teamforge.svg` and `parking.svg` are original illustrations, not application screenshots or measured results.
 
-Project copy distinguishes historical resume implementations from the maintained repositories. Ongoing EEG and traffic research is labelled; maintained forks credit their upstream authors. Experience highlights Tata Elxsi (Transportation Business Unit) and Sphinx Lab (IIIT Kottayam), using the owner-confirmed employer name and the resume role details. No private datasets, resume PDFs, phone numbers or credentials are stored here.
+Project copy distinguishes historical resume implementations from the maintained repositories. Ongoing EEG and traffic research is labelled; maintained forks credit their upstream authors. Experience lists the completed Tata Elxsi internship (Transportation Business Unit, May–July 2026), using the owner-confirmed employer and dates. No private datasets, resume PDFs, phone numbers or credentials are stored here.
 
 ## Verification
 
